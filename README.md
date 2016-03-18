@@ -12,4 +12,5 @@ Class bomb and placing bomb on playspace
 Aims :
 Animation and interaction bombs with other objects
 Class enemies with their own animation and interaction
-ololo
+ololoz
+
