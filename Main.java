@@ -29,9 +29,9 @@ public class Main extends Application {
 	private static HashMap<KeyCode,Boolean> keys = new HashMap<>();
 	
 	public static Pane mainRoot = new Pane();
-	public static Pane gameRoot;// = new Pane();
+	public static Pane gameRoot;
 	
-	public static Character player;// = new Character();
+	public static Character player;
 	public static Bomb[] bomb;
 	public static Enemy[] enemies;
 	public static int countOfEnemies = 0;
@@ -93,18 +93,20 @@ public class Main extends Application {
 		gameRoot.getChildren().addAll(img, image);
 		
 		for(int i = 0; i < 9; i++) {
-			//String line = LevelData.levels[0][i];
 			String line = LevelData.LEVEL1[i];
 			for(int j = 0; j < line.length();j++) {
 				switch (line.charAt(j)) {
 				case '0' :
-					GameItem platformFloor = new GameItem(GameItem.ItemType.PLATFORM,120 + j * 40,170 + i * 40);
+					GameItem platformFloor = 
+					new GameItem(GameItem.ItemType.PLATFORM,120 + j * 40,170 + i * 40);
 					break;
 				case '1' :
-					GameItem woodItem = new GameItem(GameItem.ItemType.WOODBOX,120 + j * 40,170 + i * 40);
+					GameItem woodItem = 
+					new GameItem(GameItem.ItemType.WOODBOX,120 + j * 40,170 + i * 40);
 					break;
 				case '2' :
-					GameItem ultItem = new GameItem(GameItem.ItemType.ULTIMATEBOX,120 + j * 40,170 + i * 40);
+					GameItem ultItem = 
+					new GameItem(GameItem.ItemType.ULTIMATEBOX,120 + j * 40,170 + i * 40);
 				}
 			}
 		}
@@ -114,7 +116,8 @@ public class Main extends Application {
 		for (int i = 0; i < (LevelData.levels[0].length - 9); i++) {
 			Enemy enemy = new Enemy();
 			String line = LevelData.levels[0][9 + i];
-			enemy.setArea(120 + 40 * myAtoi(line.charAt(2)),120 + 40 * myAtoi(line.charAt(3)),170 + 40 * myAtoi(line.charAt(4)),170 + 40 * myAtoi(line.charAt(5)));
+			enemy.setArea(120 + 40 * myAtoi(line.charAt(2)),120 + 40 * myAtoi(line.charAt(3)),
+					170 + 40 * myAtoi(line.charAt(4)),170 + 40 * myAtoi(line.charAt(5)));
 			int speedX = -myAtoi(line.charAt(6));
 			if (myAtoi(line.charAt(8)) == 0) speedX = -speedX;
 			int speedY = -myAtoi(line.charAt(7));
@@ -143,7 +146,8 @@ public class Main extends Application {
 		main_scene.setOnKeyPressed(event -> keys.put(event.getCode(), true));
 		main_scene.setOnKeyReleased(event -> {
 			keys.put(event.getCode(), false);
-			if((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) && player.isAlive() == true)
+			if((event.getCode() == KeyCode.LEFT || 
+					event.getCode() == KeyCode.RIGHT) && player.isAlive() == true)
 			player.animationRaL.EndOfAnimation();
 			if(event.getCode() == KeyCode.DOWN && player.isAlive() == true)
 			player.animationDown.EndOfAnimation();

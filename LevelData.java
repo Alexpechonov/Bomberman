@@ -12,7 +12,7 @@ public class LevelData {
 	    "0000011000001000000",
 	    "0121212121212000000",
 	    "0011000111011000000",
-	    "C40J091000",							//posx,posy,minx,maxx,miny,maxy,speedx,speedy,reverseSpeedx, reverseSpeedy
+	    "C40J091000",							
 	    "E60J091000",
 	    "F50J090100",
 	    "F50J090101"
@@ -23,5 +23,3 @@ public class LevelData {
 	};
 	
 }
-// A, B, C, D, E, F, G, H, I, J
-// 10,11,12,13,14,15,16,17,18,19

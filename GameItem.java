@@ -7,7 +7,8 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 public class GameItem extends StackPane {
-	Image itemsImage = new Image(this.getClass().getResourceAsStream("res/sprites/bomberman_tiles_sheet.png"));
+	Image itemsImage = 
+		   new Image(this.getClass().getResourceAsStream("res/sprites/bomberman_tiles_sheet.png"));
 	ImageView item;
 	
 	public enum ItemType {
@@ -56,7 +57,8 @@ public class GameItem extends StackPane {
 	}
 	
 	public void destroy() {
-		MySpriteAnimation destroyAnimation = new MySpriteAnimation(item, Duration.millis(2000), 8, 7, 89, 0, 16, 16);
+		MySpriteAnimation destroyAnimation = 
+				new MySpriteAnimation(item, Duration.millis(2000), 8, 7, 89, 0, 16, 16);
 		destroyAnimation.play();
 	}
 	

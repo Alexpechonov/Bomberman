@@ -21,12 +21,14 @@ public class MenuItem extends StackPane{
 		
 		Rectangle menuRect = new Rectangle(300, 24);
 		
-		LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
+		LinearGradient gradient = 
+				new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
 				new Stop(0, Color.BLACK),
 				new Stop(0.2, Color.YELLOW)
 		});
 		
-		LinearGradient gradientPressed = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
+		LinearGradient gradientPressed = 
+				new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
 				new Stop(0, Color.BLACK),
 				new Stop(0.5, Color.RED)
 		});
@@ -65,7 +67,6 @@ public class MenuItem extends StackPane{
 			}
 			if(type == NEW_GAME) {
 				Main.createPlayContent();
-				//this.getScene().setRoot(Main.gameRoot);
 			}
 		});
 		

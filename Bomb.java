@@ -16,7 +16,8 @@ public class Bomb extends Pane {
 	ImageView lowView = new ImageView(bombImage);
 	ImageView leftView = new ImageView(bombImage);
 	ImageView rightView = new ImageView(bombImage);
-	private MySpriteAnimation firstAnimation, centerAnimation, leftAnimation, rightAnimation, lowAnimation, hierAnimation;
+	private MySpriteAnimation firstAnimation, centerAnimation, leftAnimation, 
+		rightAnimation, lowAnimation, hierAnimation;
 	
 	private boolean ready = true;
 	private int numberOfBomb;
@@ -37,21 +38,25 @@ public class Bomb extends Pane {
 		lowView.setFitHeight(40);
 		lowView.setFitWidth(40);
 		
-		firstAnimation = new MySpriteAnimation(imageView, Duration.millis(3000), 10, 9, 0, 0, 16, 15);
+		firstAnimation = 
+				new MySpriteAnimation(imageView, Duration.millis(3000), 10, 9, 0, 0, 16, 15);
 		firstAnimation.SetType(1);
 		firstAnimation.SetNumberOfBomb(numberOfBomb);
-		centerAnimation = new MySpriteAnimation(imageView, Duration.millis(700), 5, 4, 0, 15, 16, 16);
+		centerAnimation = 
+				new MySpriteAnimation(imageView, Duration.millis(700), 5, 4, 0, 15, 16, 16);
 		centerAnimation.SetType(2);
 		centerAnimation.SetNumberOfBomb(numberOfBomb);
 		
-		leftAnimation = new MySpriteAnimation(leftView, Duration.millis(700), 5, 4, 0, 31, 16, 16);
+		leftAnimation = 
+				new MySpriteAnimation(leftView, Duration.millis(700), 5, 4, 0, 31, 16, 16);
 		leftAnimation.SetNumberOfBomb(numberOfBomb);
 		leftView.setViewport(new Rectangle2D(0, 31, 16, 16));
 		leftView.setLayoutX(-40);
 		leftView.setVisible(false);
 		getChildren().addAll(leftView);
 		
-		rightAnimation = new MySpriteAnimation(rightView, Duration.millis(700), 5, 4, 0, 47, 16, 16);
+		rightAnimation = 
+				new MySpriteAnimation(rightView, Duration.millis(700), 5, 4, 0, 47, 16, 16);
 		rightAnimation.SetNumberOfBomb(numberOfBomb);
 		rightView.setViewport(new Rectangle2D(0, 47, 16, 16));
 		rightView.setLayoutX(40);
@@ -59,14 +64,16 @@ public class Bomb extends Pane {
 		rightView.setVisible(false);
 		getChildren().addAll(rightView);
 		
-		hierAnimation = new MySpriteAnimation(hierView, Duration.millis(700), 5, 4, 0, 63, 16, 16);
+		hierAnimation 
+		= new MySpriteAnimation(hierView, Duration.millis(700), 5, 4, 0, 63, 16, 16);
 		hierAnimation.SetNumberOfBomb(numberOfBomb);
 		hierView.setViewport(new Rectangle2D(0, 63, 16, 16));
 		hierView.setLayoutY(-40);
 		hierView.setVisible(false);
 		getChildren().addAll(hierView);
 		
-		lowAnimation = new MySpriteAnimation(lowView, Duration.millis(700), 5, 4, 0, 79, 16, 16);
+		lowAnimation
+		= new MySpriteAnimation(lowView, Duration.millis(700), 5, 4, 0, 79, 16, 16);
 		lowAnimation.SetNumberOfBomb(numberOfBomb);
 		lowView.setViewport(new Rectangle2D(0, 79, 16, 16));
 		lowView.setLayoutY(40);
@@ -110,7 +117,8 @@ public class Bomb extends Pane {
 			}
 		}
 		
-		Main.platforms.get((int) ((((posY - 170) / 40) * 19) + ((posX - 120) / 40))).type = GameItem.ItemType.BOMB;
+		Main.platforms.get((int) 
+				((((posY - 170) / 40) * 19) + ((posX - 120) / 40))).type = GameItem.ItemType.BOMB;
 		
 		System.out.println("BOMB");
 		System.out.print(numberOfBomb);
@@ -127,7 +135,9 @@ public class Bomb extends Pane {
 		firstAnimation.stop();
 		imageView.setViewport(new Rectangle2D(0, 16, 16, 16));
 		centerAnimation.play();
-		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.INFIRE;
+		Main.platforms.get((int) 
+				((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + 
+				((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.INFIRE;
 		Main.player.checkPosition(pos[numberOfBomb * 2 - 2], pos[numberOfBomb * 2 - 1]);
 		
 		if ((pos[numberOfBomb * 2 - 2] - 120) == 0) left = false;
@@ -136,23 +146,28 @@ public class Bomb extends Pane {
 		if ((pos[numberOfBomb * 2 - 1] - 170) == 320) low = false;
 		
 		for( GameItem platform: Main.platforms) {
-			if (platform.type == GameItem.ItemType.ULTIMATEBOX || platform.type == GameItem.ItemType.WOODBOX) {
-				if( this.getTranslateX() - 40 == platform.getTranslateX() && this.getTranslateY() == platform.getTranslateY() && left == true) {
+			if (platform.type == GameItem.ItemType.ULTIMATEBOX || platform.type == 
+					GameItem.ItemType.WOODBOX) {
+				if( this.getTranslateX() - 40 == platform.getTranslateX() && 
+						this.getTranslateY() == platform.getTranslateY() && left == true) {
 					if (platform.type == GameItem.ItemType.ULTIMATEBOX)
 					left = false;
 					if (platform.type == GameItem.ItemType.WOODBOX)
 					platform.destroy();
-				} else if ( this.getTranslateX() + 40 == platform.getTranslateX() && this.getTranslateY() == platform.getTranslateY() && right == true) {
+				} else if ( this.getTranslateX() + 40 == platform.getTranslateX() && 
+						this.getTranslateY() == platform.getTranslateY() && right == true) {
 					if (platform.type == GameItem.ItemType.ULTIMATEBOX)
 					right = false;
 					if (platform.type == GameItem.ItemType.WOODBOX)
 					platform.destroy();
-				} else if ( this.getTranslateX() == platform.getTranslateX() && this.getTranslateY() - 40 == platform.getTranslateY() && hier == true) {
+				} else if ( this.getTranslateX() == platform.getTranslateX() && 
+						this.getTranslateY() - 40 == platform.getTranslateY() && hier == true) {
 					if (platform.type == GameItem.ItemType.ULTIMATEBOX)
 					hier = false;
 					if (platform.type == GameItem.ItemType.WOODBOX)
 					platform.destroy();
-				} else if ( this.getTranslateX() == platform.getTranslateX() && this.getTranslateY() + 40 == platform.getTranslateY() && low == true) {
+				} else if ( this.getTranslateX() == platform.getTranslateX() && 
+						this.getTranslateY() + 40 == platform.getTranslateY() && low == true) {
 					if (platform.type == GameItem.ItemType.ULTIMATEBOX)
 					low = false;
 					if (platform.type == GameItem.ItemType.WOODBOX)
@@ -164,25 +179,33 @@ public class Bomb extends Pane {
 		if ( left == true) {
 		leftAnimation.play();
 		leftView.setVisible(true);
-		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 40 - 120) / 40))).type = GameItem.ItemType.INFIRE;
+		Main.platforms.get((int) 
+				((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + 
+				((pos[numberOfBomb * 2 - 2] - 40 - 120) / 40))).type = GameItem.ItemType.INFIRE;
 		Main.player.checkPosition(pos[numberOfBomb * 2 - 2] - 40, pos[numberOfBomb * 2 - 1]);
 		}
 		if (right == true) {
 		rightAnimation.play();
 		rightView.setVisible(true);
-		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] + 40 - 120) / 40))).type = GameItem.ItemType.INFIRE;
+		Main.platforms.get((int) 
+				((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + 
+				((pos[numberOfBomb * 2 - 2] + 40 - 120) / 40))).type = GameItem.ItemType.INFIRE;
 		Main.player.checkPosition(pos[numberOfBomb * 2 - 2] - 40, pos[numberOfBomb * 2 - 1] );
 		}
 		if (hier == true) {
 		hierAnimation.play();
 		hierView.setVisible(true);
-		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 40 - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.INFIRE;
+		Main.platforms.get((int) 
+				((((pos[numberOfBomb * 2 - 1] - 40 - 170) / 40) * 19) + 
+			    ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.INFIRE;
 		Main.player.checkPosition(pos[numberOfBomb * 2 - 2], pos[numberOfBomb * 2 - 1] - 40);
 		}
 		if (low == true) {
 		lowAnimation.play();
 		lowView.setVisible(true);
-		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] + 40 - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.INFIRE;
+		Main.platforms.get((int) 
+				((((pos[numberOfBomb * 2 - 1] + 40 - 170) / 40) * 19) + 
+				((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.INFIRE;
 		Main.player.checkPosition(pos[numberOfBomb * 2 - 2], pos[numberOfBomb * 2 - 1] + 40);
 		}	
 	}
@@ -191,27 +214,34 @@ public class Bomb extends Pane {
 		Main.bomb[numberOfBomb - 1].setTranslateX(-40);
 		Main.bomb[numberOfBomb - 1].setTranslateY(-40);
 		
-		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.PLATFORM;
+		Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + 
+				((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.PLATFORM;
 		
 		if ( left == true) {
 			leftAnimation.stop();
 			leftView.setVisible(false);
-			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 40 - 120) / 40))).type = GameItem.ItemType.PLATFORM;
+			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + 
+					((pos[numberOfBomb * 2 - 2] - 40 - 120) / 40))).type = 
+					GameItem.ItemType.PLATFORM;
 			}
 			if (right == true) {
 			rightAnimation.stop();
 			rightView.setVisible(false);
-			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] + 40 - 120) / 40))).type = GameItem.ItemType.PLATFORM;
+			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 170) / 40) * 19) + 
+					((pos[numberOfBomb * 2 - 2] + 40 - 120) / 40))).type = 
+					GameItem.ItemType.PLATFORM;
 			}
 			if (hier == true) {
 			hierAnimation.stop();
 			hierView.setVisible(false);
-			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 40 - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.PLATFORM;
+			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] - 40 - 170) / 40) * 19) + 
+					((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.PLATFORM;
 			}
 			if (low == true) {
 			lowAnimation.stop();
 			lowView.setVisible(false);
-			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] + 40 - 170) / 40) * 19) + ((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.PLATFORM;
+			Main.platforms.get((int) ((((pos[numberOfBomb * 2 - 1] + 40 - 170) / 40) * 19) + 
+					((pos[numberOfBomb * 2 - 2] - 120) / 40))).type = GameItem.ItemType.PLATFORM;
 			}
 		
 			left = right = hier = low = true;
