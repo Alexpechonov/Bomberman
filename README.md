@@ -10,6 +10,6 @@ Creating bomberman with javafx
 * Class bomb and placing bomb on playspace;
 * Animation and interaction bombs with other objects;
 * Class enemies with their own animation and interaction;
-
+* Artifishial Intellegence;
 
 
