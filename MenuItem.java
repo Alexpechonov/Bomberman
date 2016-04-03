@@ -11,65 +11,78 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class MenuItem extends StackPane{
-	
-	public static final int RESUME_GAME = 0;
-	public static final int NEW_GAME = 1;
-	public static final int QUIT = 2;
-	
-	public MenuItem(String name,int type) {
-		
-		Rectangle menuRect = new Rectangle(300, 24);
-		
-		LinearGradient gradient = 
-				new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-				new Stop(0, Color.BLACK),
-				new Stop(0.2, Color.YELLOW)
-		});
-		
-		LinearGradient gradientPressed = 
-				new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-				new Stop(0, Color.BLACK),
-				new Stop(0.5, Color.RED)
-		});
-		
-		menuRect.setFill(gradient);
-		menuRect.setVisible(false);
-		menuRect.setEffect(new DropShadow(5, 0, 5, Color.BLACK));
-		
-		Text text = new Text(name + "         ");
-		text.setFill(Color.YELLOW);
-		text.setFont(Font.font(20));
-		
-		setAlignment(Pos.CENTER_RIGHT);
-		getChildren().addAll(menuRect, text);
-		
-		setOnMouseEntered(event -> {
-			menuRect.setVisible(true);
-			text.setFill(Color.RED);
-		});
-		
-		setOnMouseExited(event -> {
-			menuRect.setVisible(false);
-			text.setFill(Color.YELLOW);
-		});
-		
-		setOnMousePressed(event -> {
-			menuRect.setFill(gradientPressed);
-			text.setFill(Color.YELLOW);
-		});
-		
-		setOnMouseReleased(event -> {
-			menuRect.setFill(gradient);
-			text.setFill(Color.RED);
-			if(type == QUIT) {
-				System.exit(0); 
-			}
-			if(type == NEW_GAME) {
-				Main.createPlayContent();
-			}
-		});
-		
-	}
+/**
+ * Class extends StackPane and create menu item
+ */
+public class MenuItem extends StackPane {
+
+  public static final int RESUME_GAME = 0;
+  public static final int NEW_GAME = 1;
+  public static final int QUIT = 2;
+  public static final int LEVEL1 = 3;
+  public static final int LEVEL2 = 4;
+  public static final int LEVEL3 = 5;
+  public static final int BACK = 6;
+
+  public MenuItem(String name, int type) {
+
+    Rectangle menuRect = new Rectangle(Constants.menuWidth, Constants.itemHeight);
+
+    LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
+        new Stop[] {new Stop(0, Color.BLACK), new Stop(0.2, Color.YELLOW)});
+
+    LinearGradient gradientPressed = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
+        new Stop[] {new Stop(0, Color.BLACK), new Stop(0.5, Color.RED)});
+
+    menuRect.setFill(gradient);
+    menuRect.setVisible(false);
+    menuRect.setEffect(new DropShadow(5, 0, 5, Color.BLACK));
+
+    Text text = new Text(name + "         ");
+    text.setFill(Color.YELLOW);
+    text.setFont(Font.font(20));
+
+    setAlignment(Pos.CENTER_RIGHT);
+    getChildren().addAll(menuRect, text);
+
+    setOnMouseEntered(event -> {
+      menuRect.setVisible(true);
+      text.setFill(Color.RED);
+    });
+
+    setOnMouseExited(event -> {
+      menuRect.setVisible(false);
+      text.setFill(Color.YELLOW);
+    });
+
+    setOnMousePressed(event -> {
+      menuRect.setFill(gradientPressed);
+      text.setFill(Color.YELLOW);
+    });
+
+    setOnMouseReleased(event -> {
+      menuRect.setFill(gradient);
+      text.setFill(Color.RED);
+      if (type == QUIT) {
+        System.exit(0);
+      }
+      if (type == NEW_GAME) {
+        Main.menu.setVisible(false);
+        Main.menu.isActive = false;
+        Main.menuLevels.setVisible(true);
+        Main.menuLevels.isActive = true;
+      }
+      if (type > 2 && type < 6) {
+        Main.createPlayContent(type - 3);
+      }
+      if (type == BACK) {
+        Main.menu.setVisible(true);
+        Main.menu.isActive = true;
+        Main.menuLevels.setVisible(false);
+        Main.menuLevels.isActive = false;
+      }
+    });
+
+  }
 }
 
