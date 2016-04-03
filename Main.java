@@ -196,7 +196,6 @@ public class Main extends Application {
 
     for (int i = 0; i < 9; i++) {
       String line = LevelData.levels[numberOfLevel][i];
-      // String line = LevelData.LEVEL1[i];
       for (int j = 0; j < line.length(); j++) {
         switch (line.charAt(j)) {
           case '0':
