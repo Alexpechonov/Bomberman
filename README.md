@@ -13,3 +13,4 @@ Creating bomberman with javafx
 * Artifishial Intellegence;
 
 
+qwert
