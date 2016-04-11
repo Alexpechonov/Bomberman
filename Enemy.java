@@ -141,7 +141,7 @@ public class Enemy extends Pane {
                 speedY = 0;
                 return;
               }
-            }
+            }        
           case 2:
             if (this.getTranslateX() < Constants.offsetLeft
                 + (Constants.BlocksInHorizontal - 1) * Constants.sizeOfBlocks + 1) {

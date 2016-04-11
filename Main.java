@@ -35,6 +35,8 @@ public class Main extends Application {
    */
   public static boolean activeAI = false;
 
+  private boolean isWrited = false;
+  
   private static Scene main_scene;
   private static Stage endOfGame;
   private static Scene endScene;
@@ -275,6 +277,7 @@ public class Main extends Application {
             player.setScaleX(1);
             player.animationRaL.play();
             player.moveX(Constants.speedOfBomberman);
+            isWrited = true;
           } else if (isPressed(KeyCode.RIGHT)) {
             player.setScaleX(1);
             player.animationRaL.EndOfAnimation();
@@ -283,6 +286,7 @@ public class Main extends Application {
             player.setScaleX(-1);
             player.animationRaL.play();
             player.moveX(-Constants.speedOfBomberman);
+            isWrited = true;
           } else if (isPressed(KeyCode.LEFT)) {
             player.setScaleX(-1);
             player.animationRaL.EndOfAnimation();
@@ -290,6 +294,7 @@ public class Main extends Application {
           if (isPressed(KeyCode.UP) && player.getTranslateY() > Constants.offsetUp) {
             player.animationUp.play();
             player.moveY(-Constants.speedOfBomberman);
+            isWrited = true;
           } else if (isPressed(KeyCode.UP)) {
             player.animationUp.EndOfAnimation();
           }
@@ -299,16 +304,17 @@ public class Main extends Application {
             start = true;
             player.animationDown.play();
             player.moveY(Constants.speedOfBomberman);
+            isWrited = true;
           } else if (isPressed(KeyCode.DOWN)) {
             player.animationDown.EndOfAnimation();
           }
-        }
-        if (isPressed(KeyCode.SPACE)) {
-          start = true;
-          for (int i = 0; i < 3; i++) {
-            if (bomb[i].isReady()) {
-              bomb[i].setBomb();
-              break;
+          if (isPressed(KeyCode.SPACE)) {
+            start = true;
+            for (int i = 0; i < 3; i++) {
+              if (bomb[i].isReady()) {
+                bomb[i].setBomb();
+                break;
+              }
             }
           }
         }

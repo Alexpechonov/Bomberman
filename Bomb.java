@@ -150,7 +150,7 @@ public class Bomb extends Pane {
   }
 
   /**
-   * Method start detonatio
+   * Method start detonation
    * 
    * @see Bomb#detonation()
    */
