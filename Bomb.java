@@ -158,12 +158,11 @@ public class Bomb extends Pane {
     firstAnimation.stop();
     imageView.setViewport(new Rectangle2D(0, 16, 16, 16));
     centerAnimation.play();
-    Main.platforms.get(
-        (int) ((((pos[numberOfBomb * 2 - 1] - Constants.offsetUp) / Constants.sizeOfBlocks) * 19)
+    Main.platforms
+        .get((int) ((((pos[numberOfBomb * 2 - 1] - Constants.offsetUp) / Constants.sizeOfBlocks)
+            * Constants.BlocksInHorizontal)
             + ((pos[numberOfBomb * 2 - 2] - Constants.offsetLeft) / Constants.sizeOfBlocks))).type =
                 GameItem.ItemType.INFIRE;
-    Main.player.checkPosition(pos[numberOfBomb * 2 - 2], pos[numberOfBomb * 2 - 1]);
-
     if ((pos[numberOfBomb * 2 - 2] - Constants.offsetLeft) == 0)
       left = false;
     if ((pos[numberOfBomb * 2 - 2] - Constants.offsetLeft) == Constants.sizeOfBlocks
@@ -251,6 +250,7 @@ public class Bomb extends Pane {
                   / Constants.sizeOfBlocks))).type = GameItem.ItemType.INFIRE;
       Main.player.checkPosition(pos[numberOfBomb * 2 - 2],
           pos[numberOfBomb * 2 - 1] + Constants.sizeOfBlocks);
+      Main.player.checkPosition(pos[numberOfBomb * 2 - 2], pos[numberOfBomb * 2 - 1]);
     }
   }
 

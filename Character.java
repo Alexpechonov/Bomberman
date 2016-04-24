@@ -133,12 +133,16 @@ public class Character extends Pane {
    */
   public void setDeath() {
     if (alive == true) {
-      System.out.print(alive);
       Main.start = false;
       alive = false;
       deathAnimation.play();
+      if (Main.activeReplay == true) {
+        Constants.save.closeInputStream();
+        Main.endOfSave();
+        return;
+      }
+      Constants.save.saveMove(6);
       Main.createEndOfGame();
-
     }
   }
 
@@ -255,38 +259,49 @@ public class Character extends Pane {
         }
       }
       this.setTranslateX(this.getTranslateX() + (movingRight ? 1 : -1));
-      if ((this.getTranslateX() - Constants.offsetLeft - 3) % Constants.sizeOfBlocks == 0
-          && (this.getTranslateY() - Constants.offsetUp - 3) % Constants.sizeOfBlocks == 0) {
-        switch ((int) (Math.random() * 6)) {
-          case 1:
-            if (this.getTranslateY() > Constants.offsetUp + 3) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 3 - Constants.sizeOfBlocks - Constants.offsetUp)
-                      / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 3 - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedY = -Math.abs(speedX);
-                speedX = 0;
-                return;
-              }
-            }
-          case 2:
-            if (this.getTranslateY() < Constants.offsetUp
-                + (Constants.BlocksInVertical - 1) * Constants.sizeOfBlocks + 3) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 3 + Constants.sizeOfBlocks - Constants.offsetUp)
-                      / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 3 - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedY = Math.abs(speedX);
-                speedX = 0;
-                return;
-              }
-            }
-        }
+      if (changeDirectionX() == true)
+        return;
+    }
+  }
 
+  /**
+   * Method change move direction of character when we move by X
+   * 
+   * @return boolean whether changed direction
+   * @see Character#changeDirectionX()
+   */
+  private boolean changeDirectionX() {
+    if ((this.getTranslateX() - Constants.offsetLeft - 3) % Constants.sizeOfBlocks == 0
+        && (this.getTranslateY() - Constants.offsetUp - 3) % Constants.sizeOfBlocks == 0) {
+      switch ((int) (Math.random() * 6)) {
+        case 1:
+          if (this.getTranslateY() > Constants.offsetUp + 3) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 3 - Constants.sizeOfBlocks - Constants.offsetUp)
+                    / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 3 - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedY = -Math.abs(speedX);
+              speedX = 0;
+              return true;
+            }
+          }
+        case 2:
+          if (this.getTranslateY() < Constants.offsetUp
+              + (Constants.BlocksInVertical - 1) * Constants.sizeOfBlocks + 3) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 3 + Constants.sizeOfBlocks - Constants.offsetUp)
+                    / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 3 - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedY = Math.abs(speedX);
+              speedX = 0;
+              return true;
+            }
+          }
       }
     }
+    return false;
   }
 
   /**
@@ -314,38 +329,49 @@ public class Character extends Pane {
         }
       }
       this.setTranslateY(this.getTranslateY() + (movingDown ? 1 : -1));
-      if ((this.getTranslateX() - Constants.offsetLeft - 3) % Constants.sizeOfBlocks == 0
-          && (this.getTranslateY() - Constants.offsetUp - 3) % Constants.sizeOfBlocks == 0) {
-        switch ((int) (Math.random() * 6)) {
-          case 1:
-            if (this.getTranslateX() > Constants.offsetLeft + 3) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 3 - Constants.offsetUp) / Constants.sizeOfBlocks)
-                      * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 3 - Constants.sizeOfBlocks - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedX = -Math.abs(speedY);
-                speedY = 0;
-                return;
-              }
-            }
-          case 2:
-            if (this.getTranslateX() < Constants.offsetLeft
-                + (Constants.BlocksInHorizontal - 1) * Constants.sizeOfBlocks + 3) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 3 - Constants.offsetUp) / Constants.sizeOfBlocks)
-                      * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 3 + Constants.sizeOfBlocks - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedX = Math.abs(speedY);
-                speedY = 0;
-                return;
-              }
-            }
-        }
+      if (changeDirectionY() == true)
+        return;
+    }
+  }
 
+  /**
+   * Method change move direction of character when we move by Y
+   * 
+   * @return boolean whether changed direction
+   * @see Character#changeDirectionY()
+   */
+  private boolean changeDirectionY() {
+    if ((this.getTranslateX() - Constants.offsetLeft - 3) % Constants.sizeOfBlocks == 0
+        && (this.getTranslateY() - Constants.offsetUp - 3) % Constants.sizeOfBlocks == 0) {
+      switch ((int) (Math.random() * 6)) {
+        case 1:
+          if (this.getTranslateX() > Constants.offsetLeft + 3) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 3 - Constants.offsetUp) / Constants.sizeOfBlocks)
+                    * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 3 - Constants.sizeOfBlocks - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedX = -Math.abs(speedY);
+              speedY = 0;
+              return true;
+            }
+          }
+        case 2:
+          if (this.getTranslateX() < Constants.offsetLeft
+              + (Constants.BlocksInHorizontal - 1) * Constants.sizeOfBlocks + 3) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 3 - Constants.offsetUp) / Constants.sizeOfBlocks)
+                    * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 3 + Constants.sizeOfBlocks - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedX = Math.abs(speedY);
+              speedY = 0;
+              return true;
+            }
+          }
       }
     }
+    return false;
   }
 
   /**
@@ -356,25 +382,45 @@ public class Character extends Pane {
   public void autoMove() {
     if (ready == true) {
       ready = false;
-      if (this.getTranslateX() + Constants.sizeOfEnemy >= Constants.screenWidth
-          - Constants.offsetLeft || this.getTranslateX() <= Constants.offsetLeft)
-        speedX = -speedX;
-      if (this.getTranslateY() + Constants.sizeOfEnemy >= Constants.offsetUp
-          + Constants.BlocksInVertical * Constants.sizeOfBlocks
-          || this.getTranslateY() <= Constants.offsetUp)
-        speedY = -speedY;
+      /*
+       * if (this.getTranslateX() + Constants.sizeOfCharacter - 1 >= Constants.screenWidth -
+       * Constants.offsetLeft || this.getTranslateX() <= Constants.offsetLeft) speedX = -speedX; if
+       * (this.getTranslateY() + Constants.sizeOfCharacter >= Constants.offsetUp +
+       * Constants.BlocksInVertical * Constants.sizeOfBlocks || this.getTranslateY() <=
+       * Constants.offsetUp) speedY = -speedY;
+       */
+
+      Constants.save.saveMove(3);
       if (speedX > 0) {
         this.setScaleX(1);
         this.animationRaL.play();
-      } else if (speedX < 0) {
+        Constants.save.saveMove(1);
+        Constants.save.saveMove(0);
+      }
+      if (speedX < 0) {
         this.setScaleX(-1);
         this.animationRaL.play();
-      } else if (speedY > 0) {
-        this.animationDown.play();
-      } else if (speedY < 0) {
-        this.animationUp.play();
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(1);
       }
-
+      if (speedX == 0) {
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(0);
+      }
+      if (speedY > 0) {
+        this.animationDown.play();
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(1);
+      }
+      if (speedY < 0) {
+        this.animationUp.play();
+        Constants.save.saveMove(1);
+        Constants.save.saveMove(0);
+      }
+      if (speedY == 0) {
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(0);
+      }
       if (speedX != 0)
         autoMoveX(speedX);
       if (speedY != 0)
@@ -409,9 +455,7 @@ public class Character extends Pane {
         moveY(-Constants.speedOfBomberman);
     }
     moveY((int) (posY - this.getTranslateY()));
-
   }
-
 }
 
 

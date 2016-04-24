@@ -22,7 +22,9 @@ public class MenuItem extends StackPane {
   public static final int LEVEL1 = 3;
   public static final int LEVEL2 = 4;
   public static final int LEVEL3 = 5;
-  public static final int BACK = 6;
+  public static final int SHOW_SAVES = 6;
+  public static final int PLAY_SAVES = 7;
+  public static final int BACK = 8;
 
   public MenuItem(String name, int type) {
 
@@ -73,13 +75,23 @@ public class MenuItem extends StackPane {
         Main.menuLevels.isActive = true;
       }
       if (type > 2 && type < 6) {
-        Main.createPlayContent(type - 3);
+        Constants.save.openBufferForWrite();
+        Constants.save.addLevelNumber(type - 3);
+        Main.createGame(type - 3);
       }
       if (type == BACK) {
         Main.menu.setVisible(true);
         Main.menu.isActive = true;
         Main.menuLevels.setVisible(false);
         Main.menuLevels.isActive = false;
+      }
+      if (type == PLAY_SAVES) {
+        Constants.save.openBufferForRead();
+        Main.createGame(Constants.save.getIntFromFile());
+        Main.activeReplay = true;
+      }
+      if (type == SHOW_SAVES) {
+        Constants.save.showSaves();
       }
     });
 

@@ -26,6 +26,8 @@ import javafx.stage.WindowEvent;
  */
 public class Main extends Application {
 
+  private static Thread newThread = null;
+
   /**
    * Variable shows if game was started
    */
@@ -35,8 +37,8 @@ public class Main extends Application {
    */
   public static boolean activeAI = false;
 
-  private boolean isWrited = false;
-  
+  public static boolean activeReplay = false;
+
   private static Scene main_scene;
   private static Stage endOfGame;
   private static Scene endScene;
@@ -56,13 +58,15 @@ public class Main extends Application {
   public static Pane mainRoot = new Pane();
   public static Pane gameRoot;
 
-  public static Character player;
+  public static Character player = null;
   public static Bomb[] bomb;
   public static Enemy[] enemies;
   /**
    * Variable contains count of active enemies
    */
   public static int countOfEnemies = 0;
+
+  private static int direction;
 
   /**
    * Method create settings of main menu
@@ -122,16 +126,78 @@ public class Main extends Application {
 
   }
 
+  public static void createGame(int level) {
+    newThread = new Thread(new GameThread(level));
+    newThread.start();
+  }
+
+  public static void createEnd() {
+    newThread = new Thread(new CreateEnd());
+    newThread.start();
+  }
+
+  public static void createEndSave() {
+    newThread = new Thread(new CreateEndSave());
+    newThread.start();
+  }
+
+  public static void stopSecondThread() {
+    newThread = null;
+  }
+
+  private static void clearContent() {
+    keys.clear();
+    start = false;
+    activeReplay = false;
+    platforms.clear();
+    countOfEnemies = 0;
+    activeAI = false;
+  }
+
+  public static void endOfSave() {
+    createMenuSettings();
+    Stage endOfSave;
+    endOfSave = new Stage();
+    endOfSave.setTitle("END OF SAVE");
+    Pane saveRoot = new Pane();
+    saveRoot.setPrefSize(300, 200);
+    saveRoot.setMaxSize(300, 200);
+
+    Button but = new Button();
+    but.setText("RETURN TO MENU");
+    but.setStyle("-fx-background-color: yellow");
+    but.setTextFill(Color.RED);
+    but.setTranslateX(90);
+    but.setTranslateY(160);
+    but.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+        main_scene.setRoot(mainRoot);
+        endOfSave.close();
+      }
+    });
+    endOfSave.setOnCloseRequest(new EventHandler<WindowEvent>() {
+      public void handle(WindowEvent event) {
+        main_scene.setRoot(mainRoot);
+        endOfSave.close();
+      }
+    });
+    clearContent();
+    saveRoot.getChildren().addAll(but);
+    Scene saveScene = new Scene(saveRoot);
+    endOfSave.setScene(saveScene);
+    endOfSave.show();
+  }
+
   /**
    * Method create window after end of game
    * 
    * @see Main#createEndOfGame()
    */
   public static void createEndOfGame() {
+    createMenuSettings();
     endOfGame = new Stage();
     endOfGame.setTitle("GAME OVER");
-    keys.clear();
-    createMenuSettings();
+    Constants.save.closeOutputStream();
 
     Image background = new Image(Main.class.getResourceAsStream("res/images/GAME_OVER.jpg"));
     ImageView img = new ImageView(background);
@@ -139,8 +205,10 @@ public class Main extends Application {
     img.setFitHeight(200);
     Pane endRoot = new Pane();
     endRoot.setPrefSize(300, 200);
+    endRoot.setMaxSize(300, 200);
     Button but = new Button();
     but.setText("RETURN TO MENU");
+    but.setStyle("-fx-background-color: yellow");
     but.setTextFill(Color.RED);
     but.setTranslateX(90);
     but.setTranslateY(160);
@@ -148,25 +216,20 @@ public class Main extends Application {
       public void handle(ActionEvent event) {
         main_scene.setRoot(mainRoot);
         endOfGame.close();
-        platforms.clear();
-        countOfEnemies = 0;
-        activeAI = false;
       }
     });
     endOfGame.setOnCloseRequest(new EventHandler<WindowEvent>() {
       public void handle(WindowEvent event) {
         main_scene.setRoot(mainRoot);
         endOfGame.close();
-        platforms.clear();
-        countOfEnemies = 0;
-        activeAI = false;
       }
     });
+    clearContent();
     endRoot.getChildren().addAll(img, but);
     endScene = new Scene(endRoot);
     endOfGame.setScene(endScene);
     endOfGame.show();
-
+    stopSecondThread();
   }
 
   /**
@@ -183,6 +246,7 @@ public class Main extends Application {
     gameRoot.setPrefSize(Constants.screenHeight, Constants.screenWidth);
 
     Image background = new Image(Main.class.getResourceAsStream("res/images/grass.jpg"));
+
     ImageView img = new ImageView(background);
     img.setFitWidth(Constants.screenWidth);
     img.setFitHeight(Constants.screenHeight);
@@ -196,7 +260,30 @@ public class Main extends Application {
 
     gameRoot.getChildren().addAll(img, image);
 
-    for (int i = 0; i < 9; i++) {
+    Button but = new Button();
+    but.setText("RETURN TO MENU");
+    but.setTextFill(Color.RED);
+    but.setStyle("-fx-background-color: yellow");
+    but.setTranslateX(Constants.screenWidth - 120 - Constants.offsetLeft);
+    but.setTranslateY(20);
+    but.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+        main_scene.setRoot(mainRoot);
+        createMenuSettings();
+        Constants.save.saveMove(6);
+        Constants.save.closeOutputStream();
+        Constants.save.closeInputStream();
+        start = false;
+        activeReplay = false;
+        platforms.clear();
+        countOfEnemies = 0;
+        activeAI = false;
+      }
+    });
+
+    gameRoot.getChildren().add(but);
+
+    for (int i = 0; i < 11; i++) {
       String line = LevelData.levels[numberOfLevel][i];
       for (int j = 0; j < line.length(); j++) {
         switch (line.charAt(j)) {
@@ -242,10 +329,11 @@ public class Main extends Application {
           .setTranslateY(Constants.offsetUp + Constants.sizeOfBlocks * myAtoi(line.charAt(1)) + 1);
       countOfEnemies++;
     }
+    System.out.print(countOfEnemies);
 
     player = new Character();
-    player.setTranslateX(Constants.offsetLeft);
-    player.setTranslateY(Constants.offsetUp);
+    player.setTranslateX(Constants.offsetLeft + Constants.sizeOfBlocks);
+    player.setTranslateY(Constants.offsetUp + Constants.sizeOfBlocks);
     bomb = new Bomb[3];
     for (int i = 0; i < 3; i++) {
       Bomb bomb1 = new Bomb(i + 1);
@@ -260,6 +348,7 @@ public class Main extends Application {
     createGameSettings();
 
     main_scene.setRoot(gameRoot);
+    stopSecondThread();
   }
 
   /**
@@ -267,36 +356,46 @@ public class Main extends Application {
    * 
    * @see Main#update()
    */
-  private void update() {
-    if (gameRoot != null) {
+  private static void update() {
+    if (gameRoot != null && player != null) {
       if (player.isAlive() == true) {
         if (activeAI == false) {
+          Constants.save.saveMove(3);
           if (isPressed(KeyCode.RIGHT) && player.getTranslateX()
               + Constants.sizeOfCharacter < Constants.screenWidth - Constants.offsetLeft) {
             start = true;
             player.setScaleX(1);
             player.animationRaL.play();
             player.moveX(Constants.speedOfBomberman);
-            isWrited = true;
+            Constants.save.saveMove(1);
           } else if (isPressed(KeyCode.RIGHT)) {
             player.setScaleX(1);
             player.animationRaL.EndOfAnimation();
+            Constants.save.saveMove(0);
+          } else {
+            Constants.save.saveMove(0);
           }
           if (isPressed(KeyCode.LEFT) && player.getTranslateX() > Constants.offsetLeft) {
             player.setScaleX(-1);
             player.animationRaL.play();
             player.moveX(-Constants.speedOfBomberman);
-            isWrited = true;
+            Constants.save.saveMove(1);
           } else if (isPressed(KeyCode.LEFT)) {
             player.setScaleX(-1);
             player.animationRaL.EndOfAnimation();
+            Constants.save.saveMove(0);
+          } else {
+            Constants.save.saveMove(0);
           }
           if (isPressed(KeyCode.UP) && player.getTranslateY() > Constants.offsetUp) {
             player.animationUp.play();
             player.moveY(-Constants.speedOfBomberman);
-            isWrited = true;
+            Constants.save.saveMove(1);
           } else if (isPressed(KeyCode.UP)) {
             player.animationUp.EndOfAnimation();
+            Constants.save.saveMove(0);
+          } else {
+            Constants.save.saveMove(0);
           }
           if (isPressed(KeyCode.DOWN)
               && player.getTranslateY() + Constants.sizeOfCharacter < Constants.offsetUp
@@ -304,11 +403,16 @@ public class Main extends Application {
             start = true;
             player.animationDown.play();
             player.moveY(Constants.speedOfBomberman);
-            isWrited = true;
+            Constants.save.saveMove(1);
           } else if (isPressed(KeyCode.DOWN)) {
             player.animationDown.EndOfAnimation();
+            Constants.save.saveMove(0);
+          } else {
+            Constants.save.saveMove(0);
           }
-          if (isPressed(KeyCode.SPACE)) {
+          Constants.save.saveMove(5);
+          if (isPressed(KeyCode.B)) {
+            Constants.save.saveMove(1);
             start = true;
             for (int i = 0; i < 3; i++) {
               if (bomb[i].isReady()) {
@@ -316,10 +420,13 @@ public class Main extends Application {
                 break;
               }
             }
+          } else {
+            Constants.save.saveMove(0);
           }
         }
         boolean win = true;
         if (start == true && player.isAlive()) {
+          Constants.save.saveMove(4);
           for (int i = 0; i < countOfEnemies; i++) {
             if (enemies[i].getAlive() == true) {
               enemies[i].move();
@@ -339,13 +446,96 @@ public class Main extends Application {
     }
   }
 
+  private static void replayUpdate() {
+    if (gameRoot != null && player != null) {
+      if (player.isAlive() == true) {
+        boolean moved = false;
+        int temp;
+        temp = Constants.save.getIntFromFile();
+        switch (temp) {
+          case 3:
+            start = true;
+            if (Constants.save.getIntFromFile() == 1) {
+              player.moveX(Constants.speedOfBomberman);
+              direction = 1;
+              moved = true;
+              player.setScaleX(1);
+              player.animationRaL.play();
+            }
+            if (Constants.save.getIntFromFile() == 1) {
+              player.moveX(-Constants.speedOfBomberman);
+              direction = 2;
+              moved = true;
+              player.setScaleX(-1);
+              player.animationRaL.play();
+            }
+            if (Constants.save.getIntFromFile() == 1) {
+              player.moveY(-Constants.speedOfBomberman);
+              direction = 3;
+              moved = true;
+              player.animationUp.play();
+            }
+            if (Constants.save.getIntFromFile() == 1) {
+              player.moveY(Constants.speedOfBomberman);
+              direction = 4;
+              moved = true;
+              player.setScaleX(1);
+              player.animationDown.play();
+            }
+            if (moved == false) {
+              switch (direction) {
+                case 1:;
+                case 2:
+                  player.animationRaL.EndOfAnimation();
+                  break;
+                case 3:
+                  player.animationUp.EndOfAnimation();
+                  break;
+                case 4:
+                  player.animationDown.EndOfAnimation();
+                  break;
+              }
+            }
+            break;
+          case 4:
+            start = true;
+            for (int i = 0; i < countOfEnemies; i++) {
+              if (enemies[i].getAlive() == true) {
+                int right, left, up, down;
+                if ((right = Constants.save.getIntFromFile()) == -2
+                    || (left = Constants.save.getIntFromFile()) == -2
+                    || (down = Constants.save.getIntFromFile()) == -2
+                    || (up = Constants.save.getIntFromFile()) == -2) {
+                  return;
+                } else {
+                  enemies[i].move(right, left, down, up);
+                }
+              }
+            }
+            break;
+          case 5:
+            start = true;
+            if (Constants.save.getIntFromFile() == 1) {
+              for (int i = 0; i < 3; i++) {
+                if (bomb[i].isReady()) {
+                  bomb[i].setBomb();
+                  break;
+                }
+              }
+            }
+            break;
+        }
+      }
+    }
+  }
+
   /**
    * Check if some button was pressed
    * 
    * @param key code of button
    * @return boolean description
    */
-  private boolean isPressed(KeyCode key) {
+  private static boolean isPressed(KeyCode key) {
     return keys.getOrDefault(key, false);
   }
 
@@ -366,7 +556,9 @@ public class Main extends Application {
     mainRoot.getChildren().add(img);
 
     menu = new MenuBox(new MenuItem("RESUME GAME", MenuItem.RESUME_GAME),
-        new MenuItem("NEW GAME", MenuItem.NEW_GAME), new MenuItem("QUIT", MenuItem.QUIT));
+        new MenuItem("NEW GAME", MenuItem.NEW_GAME),
+        new MenuItem("SHOW SAVES", MenuItem.SHOW_SAVES),
+        new MenuItem("PLAY SAVES", MenuItem.PLAY_SAVES), new MenuItem("QUIT", MenuItem.QUIT));
     menu.isActive = true;
 
     menuLevels = new MenuBox(new MenuItem("LEVEL 1", MenuItem.LEVEL1),
@@ -384,6 +576,12 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     main_scene = new Scene(createContent());
     createMenuSettings();
+    primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+      public void handle(WindowEvent event) {
+        Constants.save.saveMove(6);
+        Constants.save.closeOutputStream();
+      }
+    });
     primaryStage.setTitle("Bomberman");
     primaryStage.setMaxHeight(Constants.screenHeight);
     primaryStage.setMaxWidth(Constants.screenWidth);
@@ -394,13 +592,40 @@ public class Main extends Application {
 
       @Override
       public void handle(long now) {
-        update();
-
+        if (activeReplay == true) {
+          replayUpdate();
+          replayUpdate();
+        } else {
+          update();
+        }
       }
-
     };
     timer.start();
 
+  }
+
+  private static class GameThread implements Runnable {
+    private int level;
+
+    public GameThread(int numberOfLevel) {
+      level = numberOfLevel;
+    }
+
+    public void run() {
+      createPlayContent(level);
+    }
+  }
+
+  private static class CreateEnd implements Runnable {
+    public void run() {
+      createEndOfGame();
+    }
+  }
+
+  private static class CreateEndSave implements Runnable {
+    public void run() {
+      endOfSave();
+    }
   }
 
   /**
@@ -421,4 +646,7 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
+
 }
+
+

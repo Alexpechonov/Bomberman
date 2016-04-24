@@ -27,6 +27,7 @@ public class Enemy extends Pane {
   private int minY;
   private int speedX;
   private int speedY;
+  private int speed;
 
   public Enemy() {
     ready = true;
@@ -48,8 +49,10 @@ public class Enemy extends Pane {
   public void moveX(int value) {
     boolean movingRight = value > 0;
     for (int i = 0; i < Math.abs(value); i++) {
-      if (this.getBoundsInParent().intersects(Main.player.getBoundsInParent()))
+      if (this.getBoundsInParent().intersects(Main.player.getBoundsInParent())) {
         Main.player.setDeath();
+        return;
+      }
       for (GameItem platform : Main.platforms) {
         if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
           if (platform.type == GameItem.ItemType.INFIRE) {
@@ -66,38 +69,49 @@ public class Enemy extends Pane {
         }
       }
       this.setTranslateX(this.getTranslateX() + (movingRight ? 1 : -1));
-      if ((this.getTranslateX() - Constants.offsetLeft - 1) % Constants.sizeOfBlocks == 0
-          && (this.getTranslateY() - Constants.offsetUp - 1) % Constants.sizeOfBlocks == 0) {
-        switch ((int) (Math.random() * 6)) {
-          case 1:
-            if (this.getTranslateY() > Constants.offsetUp + 1) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 1 - Constants.sizeOfBlocks - Constants.offsetUp)
-                      / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 1 - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedY = -Math.abs(speedX);
-                speedX = 0;
-                return;
-              }
-            }
-          case 2:
-            if (this.getTranslateY() < Constants.offsetUp
-                + (Constants.BlocksInVertical - 1) * Constants.sizeOfBlocks + 1) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 1 + Constants.sizeOfBlocks - Constants.offsetUp)
-                      / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 1 - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedY = Math.abs(speedX);
-                speedX = 0;
-                return;
-              }
-            }
-        }
+      if (changeDirectionX() == true)
+        return;
+    }
+  }
 
+  /**
+   * Method change move direction of enemy when we move by X
+   * 
+   * @return boolean whether changed direction
+   * @see Enemy#changeDirectionX()
+   */
+  private boolean changeDirectionX() {
+    if ((this.getTranslateX() - Constants.offsetLeft - 1) % Constants.sizeOfBlocks == 0
+        && (this.getTranslateY() - Constants.offsetUp - 1) % Constants.sizeOfBlocks == 0) {
+      switch ((int) (Math.random() * 6)) {
+        case 1:
+          if (this.getTranslateY() > Constants.offsetUp + 1) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 1 - Constants.sizeOfBlocks - Constants.offsetUp)
+                    / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 1 - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedY = -Math.abs(speedX);
+              speedX = 0;
+              return true;
+            }
+          }
+        case 2:
+          if (this.getTranslateY() < Constants.offsetUp
+              + (Constants.BlocksInVertical - 1) * Constants.sizeOfBlocks + 1) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 1 + Constants.sizeOfBlocks - Constants.offsetUp)
+                    / Constants.sizeOfBlocks) * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 1 - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedY = Math.abs(speedX);
+              speedX = 0;
+              return true;
+            }
+          }
       }
     }
+    return false;
   }
 
   /**
@@ -109,8 +123,10 @@ public class Enemy extends Pane {
   public void moveY(int value) {
     boolean movingDown = value > 0;
     for (int i = 0; i < Math.abs(value); i++) {
-      if (this.getBoundsInParent().intersects(Main.player.getBoundsInParent()))
+      if (this.getBoundsInParent().intersects(Main.player.getBoundsInParent())) {
         Main.player.setDeath();
+        return;
+      }
       for (GameItem platform : Main.platforms) {
         if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
           if (platform.type == GameItem.ItemType.INFIRE) {
@@ -127,38 +143,49 @@ public class Enemy extends Pane {
         }
       }
       this.setTranslateY(this.getTranslateY() + (movingDown ? 1 : -1));
-      if ((this.getTranslateX() - Constants.offsetLeft - 1) % Constants.sizeOfBlocks == 0
-          && (this.getTranslateY() - Constants.offsetUp - 1) % Constants.sizeOfBlocks == 0) {
-        switch ((int) (Math.random() * 6)) {
-          case 1:
-            if (this.getTranslateX() > Constants.offsetLeft + 1) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 1 - Constants.offsetUp) / Constants.sizeOfBlocks)
-                      * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 1 - Constants.sizeOfBlocks - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedX = -Math.abs(speedY);
-                speedY = 0;
-                return;
-              }
-            }        
-          case 2:
-            if (this.getTranslateX() < Constants.offsetLeft
-                + (Constants.BlocksInHorizontal - 1) * Constants.sizeOfBlocks + 1) {
-              if (Main.platforms.get(
-                  (int) ((((this.getTranslateY() - 1 - Constants.offsetUp) / Constants.sizeOfBlocks)
-                      * Constants.BlocksInHorizontal)
-                      + ((this.getTranslateX() - 1 + Constants.sizeOfBlocks - Constants.offsetLeft)
-                          / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
-                speedX = Math.abs(speedY);
-                speedY = 0;
-                return;
-              }
-            }
-        }
+      if (changeDirectionY() == true)
+        return;
+    }
+  }
 
+  /**
+   * Method change move direction of enemy when we move by Y
+   * 
+   * @return boolean whether changed direction
+   * @see Enemy#changeDirectionY()
+   */
+  private boolean changeDirectionY() {
+    if ((this.getTranslateX() - Constants.offsetLeft - 1) % Constants.sizeOfBlocks == 0
+        && (this.getTranslateY() - Constants.offsetUp - 1) % Constants.sizeOfBlocks == 0) {
+      switch ((int) (Math.random() * 6)) {
+        case 1:
+          if (this.getTranslateX() > Constants.offsetLeft + 1) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 1 - Constants.offsetUp) / Constants.sizeOfBlocks)
+                    * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 1 - Constants.sizeOfBlocks - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedX = -Math.abs(speedY);
+              speedY = 0;
+              return true;
+            }
+          }
+        case 2:
+          if (this.getTranslateX() < Constants.offsetLeft
+              + (Constants.BlocksInHorizontal - 1) * Constants.sizeOfBlocks + 1) {
+            if (Main.platforms.get(
+                (int) ((((this.getTranslateY() - 1 - Constants.offsetUp) / Constants.sizeOfBlocks)
+                    * Constants.BlocksInHorizontal)
+                    + ((this.getTranslateX() - 1 + Constants.sizeOfBlocks - Constants.offsetLeft)
+                        / Constants.sizeOfBlocks))).type == GameItem.ItemType.PLATFORM) {
+              speedX = Math.abs(speedY);
+              speedY = 0;
+              return true;
+            }
+          }
       }
     }
+    return false;
   }
 
   /**
@@ -190,19 +217,74 @@ public class Enemy extends Pane {
   public void move() {
     if (ready == true) {
       ready = false;
-      if (this.getTranslateX() + Constants.sizeOfEnemy >= maxX || this.getTranslateX() <= minX)
-        speedX = -speedX;
-      if (this.getTranslateY() + Constants.sizeOfEnemy >= maxY || this.getTranslateY() <= minY)
-        speedY = -speedY;
+      /*
+       * if (this.getTranslateX() + Constants.sizeOfEnemy >= maxX || this.getTranslateX() <= minX)
+       * speedX = -speedX; if (this.getTranslateY() + Constants.sizeOfEnemy >= maxY ||
+       * this.getTranslateY() <= minY) speedY = -speedY;
+       */
       animation.play();
-      if (speedX != 0)
-        moveX(speedX);
-      if (speedY != 0)
-        moveY(speedY);
+      if (speedX > 0 && Main.player.isAlive()) {
+        Constants.save.saveMove(1);
+        Constants.save.saveMove(0);
+      }
+      if (speedX < 0 && Main.player.isAlive()) {
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(1);
+      }
+      if (speedX == 0 && Main.player.isAlive()) {
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(0);
+      }
+      if (speedY > 0 && Main.player.isAlive()) {
+        Constants.save.saveMove(1);
+        Constants.save.saveMove(0);
+      }
+      if (speedY < 0 && Main.player.isAlive()) {
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(1);
+      }
+      if (speedY == 0 && Main.player.isAlive()) {
+        Constants.save.saveMove(0);
+        Constants.save.saveMove(0);
+      }
+      moveX(speedX);
+      moveY(speedY);
       ready = true;
     }
 
   }
+
+  public void move(int right, int left, int down, int up) {
+    if (ready == true) {
+      ready = false;
+      int saveSpeedX = 0, saveSpeedY = 0;
+      System.out.print('\n');
+      System.out.print(right);
+      System.out.print(left);
+      System.out.print(down);
+      System.out.print(up);
+      if (right == 1) {
+        saveSpeedX = speed;
+      } else if (left == 1) {
+        saveSpeedX = -speed;
+      }
+      if (down == 1) {
+        saveSpeedY = speed;
+      } else if (up == 1) {
+        saveSpeedY = -speed;
+      }
+      /*
+       * if (this.getTranslateX() + Constants.sizeOfEnemy >= maxX || this.getTranslateX() <= minX)
+       * saveSpeedX = -saveSpeedX; if (this.getTranslateY() + Constants.sizeOfEnemy >= maxY ||
+       * this.getTranslateY() <= minY) saveSpeedY = -saveSpeedY;
+       */
+      animation.play();
+      moveX(saveSpeedX);
+      moveY(saveSpeedY);
+      ready = true;
+    }
+  }
+
 
   /**
    * Method set speed of enemy
@@ -213,6 +295,11 @@ public class Enemy extends Pane {
   public void setSpeed(int x, int y) {
     speedX = x;
     speedY = y;
+    if (x == 0) {
+      speed = Math.abs(y);
+    } else {
+      speed = Math.abs(x);
+    }
   }
 
   /**
@@ -298,5 +385,9 @@ public class Enemy extends Pane {
       return false;
     }
     return true;
+  }
+
+  public int getSpeed() {
+    return speed;
   }
 }

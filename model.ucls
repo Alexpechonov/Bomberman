@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="com.alex.bsuir.Bomb" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/Bomb.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="244" y="1092"/>    
+    <position height="405" width="140" x="674" y="680"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="com.alex.bsuir.Main" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/Main.java" binary="false" corner="TOP_LEFT">    
-    <position height="423" width="198" x="528" y="37"/>    
+    <position height="603" width="198" x="718" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="com.alex.bsuir.Character" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/Character.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1040" y="1163"/>    
+    <position height="567" width="180" x="234" y="680"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="com.alex.bsuir.Enemy" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/Enemy.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="459" width="180" x="528" y="500"/>    
+    <position height="549" width="180" x="454" y="680"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="com.alex.bsuir.GameItem" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/GameItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="905" y="106"/>    
+    <position height="135" width="151" x="854" y="680"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <enumeration id="7" language="java" name="com.alex.bsuir.GameItem.ItemType" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/GameItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="904" y="336"/>    
+    <position height="171" width="143" x="854" y="1287"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </enumeration>  
   <class id="8" language="java" name="com.alex.bsuir.LevelData" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/LevelData.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="104" x="223" y="37"/>    
+    <position height="153" width="104" x="286" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="com.alex.bsuir.MenuBox" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/MenuBox.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="283" y="329"/>    
+    <position height="135" width="130" x="1045" y="680"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -84,7 +84,7 @@
   </class>  
   <class id="10" language="java" name="com.alex.bsuir.MenuItem" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/MenuItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="121" x="367" y="37"/>    
+    <position height="243" width="121" x="493" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -93,252 +93,256 @@
   </class>  
   <class id="11" language="java" name="com.alex.bsuir.MySpriteAnimation" project="Bomberman" 
     file="/Bomberman/src/com/alex/bsuir/MySpriteAnimation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="333" width="303" x="512" y="1071"/>    
+    <position height="333" width="303" x="491" y="1287"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="12">    
+  <class id="12" language="java" name="com.alex.bsuir.SaveGame" project="Bomberman" 
+    file="/Bomberman/src/com/alex/bsuir/SaveGame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="387" width="153" x="41" y="680"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="13">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="14" name="rightAnimation">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="17" name="animationRaL">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </attribute>      
+      <multiplicity id="18" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="20" name="leftAnimation">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="23" name="animation">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="13" name="platforms">        
+      <attribute id="26" name="platforms">        
         <position height="0" width="0" x="-148" y="-503"/>      
       </attribute>      
-      <multiplicity id="14" minimum="0" maximum="2147483647">        
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="-148" y="-503"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="15">    
-    <bendpoint x="578" y="1028"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="16" name="animation">        
+  <association id="28">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="29" name="animationDown">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1">        
+      <multiplicity id="30" minimum="0" maximum="1">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="18">    
-    <bendpoint x="387" y="1206"/>    
+  <association id="31">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="32" name="save"/>      
+      <multiplicity id="33" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="19" name="centerAnimation">        
+      <attribute id="35" name="centerAnimation">        
         <position height="18" width="86" x="782" y="664"/>      
       </attribute>      
-      <multiplicity id="20" minimum="0" maximum="1">        
+      <multiplicity id="36" minimum="0" maximum="1">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="21">    
+  <association id="37">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="22" name="player">        
-        <position height="0" width="0" x="383" y="779"/>      
-      </attribute>      
-      <multiplicity id="23" minimum="0" maximum="1">        
-        <position height="0" width="0" x="383" y="779"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="24">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="25" name="animationUp">        
-        <position height="18" width="68" x="840" y="1177"/>      
-      </attribute>      
-      <multiplicity id="26" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="27">    
-    <bendpoint x="417" y="1124"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="28" name="rightAnimation">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </attribute>      
-      <multiplicity id="29" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="30">    
-    <bendpoint x="888" y="1241"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="31" name="animationDown">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </attribute>      
-      <multiplicity id="32" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="33">    
-    <bendpoint x="390" y="1257"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="34" name="firstAnimation">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </attribute>      
-      <multiplicity id="35" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="36">    
-    <bendpoint x="723" y="1016"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="37" name="deathAnimation">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </attribute>      
-      <multiplicity id="38" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="39">    
-    <bendpoint x="406" y="1173"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="40" name="hierAnimation">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </attribute>      
-      <multiplicity id="41" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
-    <bendpoint x="432" y="1063"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="43" name="leftAnimation">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </attribute>      
-      <multiplicity id="44" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="46" name="bomb">        
+      <attribute id="38" name="bomb">        
         <position height="0" width="0" x="93" y="271"/>      
       </attribute>      
-      <multiplicity id="47" minimum="0" maximum="2147483647">        
+      <multiplicity id="39" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="93" y="271"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="48">    
-    <bendpoint x="893" y="1304"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="49" name="animationRaL">        
+  <association id="40">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="41" name="deathAnimation">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </attribute>      
-      <multiplicity id="50" minimum="0" maximum="1">        
+      <multiplicity id="42" minimum="0" maximum="1">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="51">    
-    <bendpoint x="886" y="1136"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="52" name="deathAnimation">        
-        <position height="18" width="84" x="823" y="1117"/>      
-      </attribute>      
-      <multiplicity id="53" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-178" y="-424"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="54">    
-    <bendpoint x="386" y="1321"/>    
+  <association id="43">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="55" name="lowAnimation">        
+      <attribute id="44" name="lowAnimation">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </attribute>      
-      <multiplicity id="56" minimum="0" maximum="1">        
+      <multiplicity id="45" minimum="0" maximum="1">        
         <position height="0" width="0" x="-178" y="-424"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="57">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="58" name="type">        
-        <position height="0" width="0" x="-135" y="-820"/>      
+  <association id="46">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="47" name="firstAnimation">        
+        <position height="0" width="0" x="-178" y="-424"/>      
       </attribute>      
-      <multiplicity id="59" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-135" y="-820"/>      
+      <multiplicity id="48" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="60">    
-    <bendpoint x="444" y="333"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="61" name="menuLevels">        
-        <position height="0" width="0" x="-60" y="-107"/>      
+  <association id="49">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="50" name="animationUp">        
+        <position height="18" width="68" x="840" y="1177"/>      
       </attribute>      
-      <multiplicity id="62" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-60" y="-107"/>      
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="63">    
+  <association id="52">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="64" name="enemies">        
+      <attribute id="53" name="enemies">        
         <position height="0" width="0" x="-188" y="304"/>      
       </attribute>      
-      <multiplicity id="65" minimum="0" maximum="2147483647">        
+      <multiplicity id="54" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="-188" y="304"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="66">    
-    <bendpoint x="445" y="265"/>    
+  <association id="55">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="67" name="menu">        
+      <attribute id="56" name="menu">        
         <position height="18" width="36" x="353" y="275"/>      
       </attribute>      
-      <multiplicity id="68" minimum="0" maximum="1">        
+      <multiplicity id="57" minimum="0" maximum="1">        
         <position height="0" width="0" x="-60" y="-107"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="59" name="deathAnimation">        
+        <position height="18" width="84" x="823" y="1117"/>      
+      </attribute>      
+      <multiplicity id="60" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="62" name="menuLevels">        
+        <position height="0" width="0" x="-60" y="-107"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-60" y="-107"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="65" name="type">        
+        <position height="0" width="0" x="-135" y="-820"/>      
+      </attribute>      
+      <multiplicity id="66" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-135" y="-820"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="68" name="player">        
+        <position height="0" width="0" x="383" y="779"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="1">        
+        <position height="0" width="0" x="383" y="779"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="71" name="hierAnimation">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </attribute>      
+      <multiplicity id="72" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-178" y="-424"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
