@@ -29,11 +29,11 @@ public class Character extends Pane {
 
   public Character() {
 
-    if ((int) (Math.random() * 2) == 0)
+    if ((int) (Math.random() * 2) == 0) {
       speedX = Constants.speedOfBomberman;
-    else
+    } else {
       speedY = Constants.speedOfBomberman;
-
+    }
     alive = true;
     imageView.setFitHeight(Constants.sizeOfCharacter);
     imageView.setFitWidth(Constants.sizeOfCharacter);
@@ -75,11 +75,13 @@ public class Character extends Pane {
             return;
           }
           if (movingRight) {
-            if (checkRight(platform) == false)
+            if (checkRight(platform) == false) {
               return;
+            }
           } else {
-            if (checkLeft(platform) == false)
+            if (checkLeft(platform) == false) {
               return;
+            }
           }
         }
       }
@@ -103,11 +105,13 @@ public class Character extends Pane {
             return;
           }
           if (movingDown) {
-            if (checkDown(platform) == false)
+            if (checkDown(platform) == false) {
               return;
+            }
           } else {
-            if (checkUp(platform) == false)
+            if (checkUp(platform) == false) {
               return;
+            }
           }
         }
       }
@@ -122,8 +126,9 @@ public class Character extends Pane {
    * @see Character#checkPosition(int, int)
    */
   public void checkPosition(int x, int y) {
-    if (this.getBoundsInParent().intersects(x, y, Constants.sizeOfBlocks, Constants.sizeOfBlocks))
+    if (this.getBoundsInParent().intersects(x, y, Constants.sizeOfBlocks, Constants.sizeOfBlocks)) {
       setDeath();
+    }
   }
 
   /**
@@ -141,8 +146,8 @@ public class Character extends Pane {
         Main.endOfSave();
         return;
       }
-      Constants.save.saveMove(6);
-      Main.createEndOfGame();
+
+      Main.createEnd();
     }
   }
 
@@ -159,10 +164,12 @@ public class Character extends Pane {
         && (platform.type != GameItem.ItemType.INFIRE)) {
       this.setTranslateX(this.getTranslateX() - 1);
       speedX = -speedX;
-      if (this.getTranslateY() + Constants.sizeOfCharacter - 5 <= platform.getTranslateY())
+      if (this.getTranslateY() + Constants.sizeOfCharacter - 5 <= platform.getTranslateY()) {
         this.setTranslateY(this.getTranslateY() - 1);
-      if (this.getTranslateY() >= platform.getTranslateY() + Constants.sizeOfCharacter)
+      }
+      if (this.getTranslateY() >= platform.getTranslateY() + Constants.sizeOfCharacter) {
         this.setTranslateY(this.getTranslateY() + 1);
+      }
       return false;
     }
     return true;
@@ -181,10 +188,12 @@ public class Character extends Pane {
         && (platform.type != GameItem.ItemType.INFIRE)) {
       this.setTranslateX(this.getTranslateX() + 1);
       speedX = -speedX;
-      if (this.getTranslateY() + Constants.sizeOfCharacter - 5 <= platform.getTranslateY())
+      if (this.getTranslateY() + Constants.sizeOfCharacter - 5 <= platform.getTranslateY()) {
         this.setTranslateY(this.getTranslateY() - 1);
-      if (this.getTranslateY() >= platform.getTranslateY() + Constants.sizeOfCharacter)
+      }
+      if (this.getTranslateY() >= platform.getTranslateY() + Constants.sizeOfCharacter) {
         this.setTranslateY(this.getTranslateY() + 1);
+      }
       return false;
     }
     return true;
@@ -203,10 +212,12 @@ public class Character extends Pane {
         && (platform.type != GameItem.ItemType.INFIRE)) {
       this.setTranslateY(this.getTranslateY() - 1);
       speedY = -speedY;
-      if (this.getTranslateX() >= platform.getTranslateX() + Constants.sizeOfBlocks - 5)
+      if (this.getTranslateX() >= platform.getTranslateX() + Constants.sizeOfBlocks - 5) {
         this.setTranslateX(this.getTranslateX() + 1);
-      if (this.getTranslateX() + Constants.sizeOfCharacter - 5 <= platform.getTranslateX())
+      }
+      if (this.getTranslateX() + Constants.sizeOfCharacter - 5 <= platform.getTranslateX()) {
         this.setTranslateX(this.getTranslateX() - 1);
+      }
       return false;
     }
     return true;
@@ -225,10 +236,12 @@ public class Character extends Pane {
         && (platform.type != GameItem.ItemType.INFIRE)) {
       this.setTranslateY(this.getTranslateY() + 1);
       speedY = -speedY;
-      if (this.getTranslateX() >= platform.getTranslateX() + Constants.sizeOfBlocks - 5)
+      if (this.getTranslateX() >= platform.getTranslateX() + Constants.sizeOfBlocks - 5) {
         this.setTranslateX(this.getTranslateX() + 1);
-      if (this.getTranslateX() + Constants.sizeOfCharacter - 5 <= platform.getTranslateX())
+      }
+      if (this.getTranslateX() + Constants.sizeOfCharacter - 5 <= platform.getTranslateX()) {
         this.setTranslateX(this.getTranslateX() - 1);
+      }
       return false;
     }
     return true;
@@ -250,17 +263,20 @@ public class Character extends Pane {
             return;
           }
           if (movingRight) {
-            if (checkRight(platform) == false)
+            if (checkRight(platform) == false) {
               return;
+            }
           } else {
-            if (checkLeft(platform) == false)
+            if (checkLeft(platform) == false) {
               return;
+            }
           }
         }
       }
       this.setTranslateX(this.getTranslateX() + (movingRight ? 1 : -1));
-      if (changeDirectionX() == true)
+      if (changeDirectionX() == true) {
         return;
+      }
     }
   }
 
@@ -320,17 +336,20 @@ public class Character extends Pane {
             return;
           }
           if (movingDown) {
-            if (checkDown(platform) == false)
+            if (checkDown(platform) == false) {
               return;
+            }
           } else {
-            if (checkUp(platform) == false)
+            if (checkUp(platform) == false) {
               return;
+            }
           }
         }
       }
       this.setTranslateY(this.getTranslateY() + (movingDown ? 1 : -1));
-      if (changeDirectionY() == true)
+      if (changeDirectionY() == true) {
         return;
+      }
     }
   }
 
@@ -382,14 +401,6 @@ public class Character extends Pane {
   public void autoMove() {
     if (ready == true) {
       ready = false;
-      /*
-       * if (this.getTranslateX() + Constants.sizeOfCharacter - 1 >= Constants.screenWidth -
-       * Constants.offsetLeft || this.getTranslateX() <= Constants.offsetLeft) speedX = -speedX; if
-       * (this.getTranslateY() + Constants.sizeOfCharacter >= Constants.offsetUp +
-       * Constants.BlocksInVertical * Constants.sizeOfBlocks || this.getTranslateY() <=
-       * Constants.offsetUp) speedY = -speedY;
-       */
-
       Constants.save.saveMove(3);
       if (speedX > 0) {
         this.setScaleX(1);
@@ -441,18 +452,20 @@ public class Character extends Pane {
     posY = posY - (posY % Constants.sizeOfBlocks) + Constants.offsetUp + 3;
 
     while (Math.abs(posX - this.getTranslateX()) > Constants.speedOfBomberman) {
-      if (posX - this.getTranslateX() > 0)
+      if (posX - this.getTranslateX() > 0) {
         moveX(1);
-      else
+      } else {
         moveX(-1);
+      }
     }
     moveX((int) (posX - this.getTranslateX()));
 
     while (Math.abs(posY - this.getTranslateY()) > Constants.speedOfBomberman) {
-      if (posY - this.getTranslateY() > 0)
+      if (posY - this.getTranslateY() > 0) {
         moveY(Constants.speedOfBomberman);
-      else
+      } else {
         moveY(-Constants.speedOfBomberman);
+      }
     }
     moveY((int) (posY - this.getTranslateY()));
   }

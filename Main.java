@@ -3,8 +3,8 @@ package com.alex.bsuir;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -27,6 +27,8 @@ import javafx.stage.WindowEvent;
 public class Main extends Application {
 
   private static Thread newThread = null;
+  private static Thread playThread = null;
+  private static Thread replayThread = null;
 
   /**
    * Variable shows if game was started
@@ -104,12 +106,15 @@ public class Main extends Application {
       keys.put(event.getCode(), false);
       if (activeAI == false) {
         if ((event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT)
-            && player.isAlive() == true)
+            && player.isAlive() == true) {
           player.animationRaL.EndOfAnimation();
-        if (event.getCode() == KeyCode.DOWN && player.isAlive() == true)
+        }
+        if (event.getCode() == KeyCode.DOWN && player.isAlive() == true) {
           player.animationDown.EndOfAnimation();
-        if (event.getCode() == KeyCode.UP && player.isAlive() == true)
+        }
+        if (event.getCode() == KeyCode.UP && player.isAlive() == true) {
           player.animationUp.EndOfAnimation();
+        }
       }
       if (event.getCode() == KeyCode.A && player.isAlive() == true) {
         if (activeAI == true) {
@@ -118,12 +123,30 @@ public class Main extends Application {
           player.animationRaL.stop();
           player.animationUp.stop();
           player.animationRaL.EndOfAnimation();
-        } else
+        } else {
           activeAI = true;
-        player.normalize();
+          player.normalize();
+        }
       }
     });
+  }
 
+  public static void startGame() {
+    playThread = new Thread(new startGame());
+    playThread.start();
+  }
+
+  public static void pausePlay() {
+    playThread = null;
+  }
+
+  public static void startReplay() {
+    replayThread = new Thread(new startReplay());
+    replayThread.start();
+  }
+
+  public static void pauseReplay() {
+    replayThread = null;
   }
 
   public static void createGame(int level) {
@@ -152,40 +175,48 @@ public class Main extends Application {
     platforms.clear();
     countOfEnemies = 0;
     activeAI = false;
+    pausePlay();
+    pauseReplay();
   }
 
   public static void endOfSave() {
     createMenuSettings();
-    Stage endOfSave;
-    endOfSave = new Stage();
-    endOfSave.setTitle("END OF SAVE");
-    Pane saveRoot = new Pane();
-    saveRoot.setPrefSize(300, 200);
-    saveRoot.setMaxSize(300, 200);
+    Platform.runLater(new Runnable() {
+      @Override
+      public void run() {
+        Stage endOfSave;
+        endOfSave = new Stage();
+        endOfSave.setTitle("END OF SAVE");
+        Pane saveRoot = new Pane();
+        saveRoot.setPrefSize(300, 200);
+        saveRoot.setMaxSize(300, 200);
 
-    Button but = new Button();
-    but.setText("RETURN TO MENU");
-    but.setStyle("-fx-background-color: yellow");
-    but.setTextFill(Color.RED);
-    but.setTranslateX(90);
-    but.setTranslateY(160);
-    but.setOnAction(new EventHandler<ActionEvent>() {
-      public void handle(ActionEvent event) {
-        main_scene.setRoot(mainRoot);
-        endOfSave.close();
+        Button but = new Button();
+        but.setText("RETURN TO MENU");
+        but.setStyle("-fx-background-color: yellow");
+        but.setTextFill(Color.RED);
+        but.setTranslateX(90);
+        but.setTranslateY(160);
+        but.setOnAction(new EventHandler<ActionEvent>() {
+          public void handle(ActionEvent event) {
+            main_scene.setRoot(mainRoot);
+            endOfSave.close();
+          }
+        });
+        endOfSave.setOnCloseRequest(new EventHandler<WindowEvent>() {
+          public void handle(WindowEvent event) {
+            main_scene.setRoot(mainRoot);
+            endOfSave.close();
+          }
+        });
+        saveRoot.getChildren().addAll(but);
+        Scene saveScene = new Scene(saveRoot);
+        endOfSave.setScene(saveScene);
+        endOfSave.show();
+        clearContent();
+        stopSecondThread();
       }
     });
-    endOfSave.setOnCloseRequest(new EventHandler<WindowEvent>() {
-      public void handle(WindowEvent event) {
-        main_scene.setRoot(mainRoot);
-        endOfSave.close();
-      }
-    });
-    clearContent();
-    saveRoot.getChildren().addAll(but);
-    Scene saveScene = new Scene(saveRoot);
-    endOfSave.setScene(saveScene);
-    endOfSave.show();
   }
 
   /**
@@ -195,41 +226,48 @@ public class Main extends Application {
    */
   public static void createEndOfGame() {
     createMenuSettings();
-    endOfGame = new Stage();
-    endOfGame.setTitle("GAME OVER");
-    Constants.save.closeOutputStream();
+    Platform.runLater(new Runnable() {
+      @Override
+      public void run() {
+        endOfGame = new Stage();
+        endOfGame.setTitle("GAME OVER");
+        Constants.save.closeOutputStream();
 
-    Image background = new Image(Main.class.getResourceAsStream("res/images/GAME_OVER.jpg"));
-    ImageView img = new ImageView(background);
-    img.setFitWidth(300);
-    img.setFitHeight(200);
-    Pane endRoot = new Pane();
-    endRoot.setPrefSize(300, 200);
-    endRoot.setMaxSize(300, 200);
-    Button but = new Button();
-    but.setText("RETURN TO MENU");
-    but.setStyle("-fx-background-color: yellow");
-    but.setTextFill(Color.RED);
-    but.setTranslateX(90);
-    but.setTranslateY(160);
-    but.setOnAction(new EventHandler<ActionEvent>() {
-      public void handle(ActionEvent event) {
-        main_scene.setRoot(mainRoot);
-        endOfGame.close();
+        Image background = new Image(Main.class.getResourceAsStream("res/images/GAME_OVER.jpg"));
+        ImageView img = new ImageView(background);
+        img.setFitWidth(300);
+        img.setFitHeight(200);
+        Pane endRoot = new Pane();
+        endRoot.setPrefSize(300, 200);
+        endRoot.setMaxSize(300, 200);
+        Button but = new Button();
+        but.setText("RETURN TO MENU");
+        but.setStyle("-fx-background-color: yellow");
+        but.setTextFill(Color.RED);
+        but.setTranslateX(90);
+        but.setTranslateY(160);
+        but.setOnAction(new EventHandler<ActionEvent>() {
+          public void handle(ActionEvent event) {
+            main_scene.setRoot(mainRoot);
+            endOfGame.close();
+          }
+        });
+        endOfGame.setOnCloseRequest(new EventHandler<WindowEvent>() {
+          public void handle(WindowEvent event) {
+            main_scene.setRoot(mainRoot);
+            endOfGame.close();
+          }
+        });
+        endRoot.getChildren().addAll(img, but);
+        endScene = new Scene(endRoot);
+        endOfGame.setScene(endScene);
+        endOfGame.show();
+        clearContent();
+        stopSecondThread();
       }
     });
-    endOfGame.setOnCloseRequest(new EventHandler<WindowEvent>() {
-      public void handle(WindowEvent event) {
-        main_scene.setRoot(mainRoot);
-        endOfGame.close();
-      }
-    });
-    clearContent();
-    endRoot.getChildren().addAll(img, but);
-    endScene = new Scene(endRoot);
-    endOfGame.setScene(endScene);
-    endOfGame.show();
-    stopSecondThread();
+
+
   }
 
   /**
@@ -239,6 +277,8 @@ public class Main extends Application {
    * @see Main#createPlayContent(int)
    */
   public static void createPlayContent(int numberOfLevel) {
+
+
 
     start = false;
     gameRoot = new Pane();
@@ -268,9 +308,9 @@ public class Main extends Application {
     but.setTranslateY(20);
     but.setOnAction(new EventHandler<ActionEvent>() {
       public void handle(ActionEvent event) {
+
         main_scene.setRoot(mainRoot);
         createMenuSettings();
-        Constants.save.saveMove(6);
         Constants.save.closeOutputStream();
         Constants.save.closeInputStream();
         start = false;
@@ -278,8 +318,10 @@ public class Main extends Application {
         platforms.clear();
         countOfEnemies = 0;
         activeAI = false;
+        clearContent();
       }
     });
+    but.setFocusTraversable(false);
 
     gameRoot.getChildren().add(but);
 
@@ -305,6 +347,17 @@ public class Main extends Application {
       }
     }
 
+    player = new Character();
+    player.setTranslateX(Constants.offsetLeft + Constants.sizeOfBlocks + 3);
+    player.setTranslateY(Constants.offsetUp + Constants.sizeOfBlocks + 3);
+
+    bomb = new Bomb[3];
+    for (int i = 0; i < 3; i++) {
+      Bomb bomb1 = new Bomb(i + 1);
+      bomb[i] = bomb1;
+      bomb[i].setVisible(false);
+    }
+
     enemies = new Enemy[LevelData.levels[numberOfLevel].length - Constants.BlocksInVertical];
 
     for (int i =
@@ -316,11 +369,13 @@ public class Main extends Application {
           170 + Constants.sizeOfBlocks * myAtoi(line.charAt(4)),
           170 + Constants.sizeOfBlocks * myAtoi(line.charAt(5)));
       int speedX = -myAtoi(line.charAt(6));
-      if (myAtoi(line.charAt(8)) == 0)
+      if (myAtoi(line.charAt(8)) == 0) {
         speedX = -speedX;
+      }
       int speedY = -myAtoi(line.charAt(7));
-      if (myAtoi(line.charAt(9)) == 0)
+      if (myAtoi(line.charAt(9)) == 0) {
         speedY = -speedY;
+      }
       enemy.setSpeed(speedX, speedY);
       enemies[i] = enemy;
       enemies[i].setTranslateX(
@@ -330,17 +385,6 @@ public class Main extends Application {
       countOfEnemies++;
     }
     System.out.print(countOfEnemies);
-
-    player = new Character();
-    player.setTranslateX(Constants.offsetLeft + Constants.sizeOfBlocks);
-    player.setTranslateY(Constants.offsetUp + Constants.sizeOfBlocks);
-    bomb = new Bomb[3];
-    for (int i = 0; i < 3; i++) {
-      Bomb bomb1 = new Bomb(i + 1);
-      bomb[i] = bomb1;
-      bomb[i].setVisible(false);
-    }
-
     gameRoot.getChildren().add(player);
     gameRoot.getChildren().addAll(bomb);
     gameRoot.getChildren().addAll(enemies);
@@ -348,6 +392,12 @@ public class Main extends Application {
     createGameSettings();
 
     main_scene.setRoot(gameRoot);
+
+    if (activeReplay == true) {
+      startReplay();
+    } else {
+      startGame();
+    }
     stopSecondThread();
   }
 
@@ -360,6 +410,7 @@ public class Main extends Application {
     if (gameRoot != null && player != null) {
       if (player.isAlive() == true) {
         if (activeAI == false) {
+
           Constants.save.saveMove(3);
           if (isPressed(KeyCode.RIGHT) && player.getTranslateX()
               + Constants.sizeOfCharacter < Constants.screenWidth - Constants.offsetLeft) {
@@ -410,9 +461,7 @@ public class Main extends Application {
           } else {
             Constants.save.saveMove(0);
           }
-          Constants.save.saveMove(5);
-          if (isPressed(KeyCode.B)) {
-            Constants.save.saveMove(1);
+          if (isPressed(KeyCode.SPACE)) {
             start = true;
             for (int i = 0; i < 3; i++) {
               if (bomb[i].isReady()) {
@@ -420,15 +469,14 @@ public class Main extends Application {
                 break;
               }
             }
-          } else {
-            Constants.save.saveMove(0);
           }
         }
         boolean win = true;
         if (start == true && player.isAlive()) {
-          Constants.save.saveMove(4);
           for (int i = 0; i < countOfEnemies; i++) {
             if (enemies[i].getAlive() == true) {
+              Constants.save.saveMove(4);
+              Constants.save.saveMove(i);
               enemies[i].move();
               win = false;
             }
@@ -499,29 +547,31 @@ public class Main extends Application {
             break;
           case 4:
             start = true;
-            for (int i = 0; i < countOfEnemies; i++) {
-              if (enemies[i].getAlive() == true) {
-                int right, left, up, down;
-                if ((right = Constants.save.getIntFromFile()) == -2
-                    || (left = Constants.save.getIntFromFile()) == -2
-                    || (down = Constants.save.getIntFromFile()) == -2
-                    || (up = Constants.save.getIntFromFile()) == -2) {
-                  return;
-                } else {
-                  enemies[i].move(right, left, down, up);
-                }
-              }
+            int numberOfEnemy = Constants.save.getIntFromFile();
+            int x1, x2, x3, y1, y2, y3;
+            if ((x1 = Constants.save.getIntFromFile()) == -2
+                || (x2 = Constants.save.getIntFromFile()) == -2
+                || (x3 = Constants.save.getIntFromFile()) == -2
+                || (y1 = Constants.save.getIntFromFile()) == -2
+                || (y2 = Constants.save.getIntFromFile()) == -2
+                || (y3 = Constants.save.getIntFromFile()) == -2) {
+              return;
+            } else {
+              enemies[numberOfEnemy].move(x1, x2, x3, y1, y2, y3);
             }
             break;
           case 5:
             start = true;
-            if (Constants.save.getIntFromFile() == 1) {
-              for (int i = 0; i < 3; i++) {
-                if (bomb[i].isReady()) {
-                  bomb[i].setBomb();
-                  break;
-                }
-              }
+            int numberOfBomb = Constants.save.getIntFromFile() - 1;
+            if ((x1 = Constants.save.getIntFromFile()) == -2
+                || (x2 = Constants.save.getIntFromFile()) == -2
+                || (x3 = Constants.save.getIntFromFile()) == -2
+                || (y1 = Constants.save.getIntFromFile()) == -2
+                || (y2 = Constants.save.getIntFromFile()) == -2
+                || (y3 = Constants.save.getIntFromFile()) == -2) {
+              return;
+            } else {
+              bomb[numberOfBomb].setBomb(numberOfBomb, x1, x2, x3, y1, y2, y3);
             }
             break;
         }
@@ -578,8 +628,10 @@ public class Main extends Application {
     createMenuSettings();
     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
       public void handle(WindowEvent event) {
-        Constants.save.saveMove(6);
+        pausePlay();
+        pauseReplay();
         Constants.save.closeOutputStream();
+        stopSecondThread();
       }
     });
     primaryStage.setTitle("Bomberman");
@@ -587,21 +639,6 @@ public class Main extends Application {
     primaryStage.setMaxWidth(Constants.screenWidth);
     primaryStage.setScene(main_scene);
     primaryStage.show();
-
-    AnimationTimer timer = new AnimationTimer() {
-
-      @Override
-      public void handle(long now) {
-        if (activeReplay == true) {
-          replayUpdate();
-          replayUpdate();
-        } else {
-          update();
-        }
-      }
-    };
-    timer.start();
-
   }
 
   private static class GameThread implements Runnable {
@@ -625,6 +662,38 @@ public class Main extends Application {
   private static class CreateEndSave implements Runnable {
     public void run() {
       endOfSave();
+    }
+  }
+
+  private static class startReplay implements Runnable {
+    public void run() {
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      int delay = countOfEnemies * 3;
+      while (replayThread != null) {
+        try {
+          Thread.sleep(15 - delay);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        replayUpdate();
+      }
+    }
+  }
+
+  private static class startGame implements Runnable {
+    public void run() {
+      while (playThread != null) {
+        try {
+          Thread.sleep(20);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        update();
+      }
     }
   }
 

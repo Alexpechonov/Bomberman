@@ -87,8 +87,8 @@ public class MenuItem extends StackPane {
       }
       if (type == PLAY_SAVES) {
         Constants.save.openBufferForRead();
-        Main.createGame(Constants.save.getIntFromFile());
         Main.activeReplay = true;
+        Main.createGame(Constants.save.getIntFromFile());
       }
       if (type == SHOW_SAVES) {
         Constants.save.showSaves();

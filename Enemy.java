@@ -60,17 +60,20 @@ public class Enemy extends Pane {
             return;
           }
           if (movingRight) {
-            if (checkRight(platform) == false)
+            if (checkRight(platform) == false) {
               return;
+            }
           } else {
-            if (checkLeft(platform) == false)
+            if (checkLeft(platform) == false) {
               return;
+            }
           }
         }
       }
       this.setTranslateX(this.getTranslateX() + (movingRight ? 1 : -1));
-      if (changeDirectionX() == true)
+      if (changeDirectionX() == true && Main.activeReplay == false) {
         return;
+      }
     }
   }
 
@@ -134,17 +137,20 @@ public class Enemy extends Pane {
             return;
           }
           if (movingDown) {
-            if (checkDown(platform) == false)
+            if (checkDown(platform) == false) {
               return;
+            }
           } else {
-            if (checkUp(platform) == false)
+            if (checkUp(platform) == false) {
               return;
+            }
           }
         }
       }
       this.setTranslateY(this.getTranslateY() + (movingDown ? 1 : -1));
-      if (changeDirectionY() == true)
+      if (changeDirectionY() == true && Main.activeReplay == false) {
         return;
+      }
     }
   }
 
@@ -217,79 +223,44 @@ public class Enemy extends Pane {
   public void move() {
     if (ready == true) {
       ready = false;
-      /*
-       * if (this.getTranslateX() + Constants.sizeOfEnemy >= maxX || this.getTranslateX() <= minX)
-       * speedX = -speedX; if (this.getTranslateY() + Constants.sizeOfEnemy >= maxY ||
-       * this.getTranslateY() <= minY) speedY = -speedY;
-       */
       animation.play();
-      if (speedX > 0 && Main.player.isAlive()) {
-        Constants.save.saveMove(1);
-        Constants.save.saveMove(0);
-      }
-      if (speedX < 0 && Main.player.isAlive()) {
-        Constants.save.saveMove(0);
-        Constants.save.saveMove(1);
-      }
-      if (speedX == 0 && Main.player.isAlive()) {
-        Constants.save.saveMove(0);
-        Constants.save.saveMove(0);
-      }
-      if (speedY > 0 && Main.player.isAlive()) {
-        Constants.save.saveMove(1);
-        Constants.save.saveMove(0);
-      }
-      if (speedY < 0 && Main.player.isAlive()) {
-        Constants.save.saveMove(0);
-        Constants.save.saveMove(1);
-      }
-      if (speedY == 0 && Main.player.isAlive()) {
-        Constants.save.saveMove(0);
-        Constants.save.saveMove(0);
-      }
       moveX(speedX);
       moveY(speedY);
+      int preobr = (int) this.getTranslateX();
+      Constants.save.saveMove(preobr % 10);
+      preobr /= 10;
+      Constants.save.saveMove(preobr % 10);
+      preobr /= 10;
+      Constants.save.saveMove(preobr % 10);
+
+      preobr = (int) this.getTranslateY();
+      Constants.save.saveMove(preobr % 10);
+      preobr /= 10;
+      Constants.save.saveMove(preobr % 10);
+      preobr /= 10;
+      Constants.save.saveMove(preobr % 10);
       ready = true;
     }
 
   }
 
-  public void move(int right, int left, int down, int up) {
+  public void move(int x1, int x2, int x3, int y1, int y2, int y3) {
     if (ready == true) {
       ready = false;
-      int saveSpeedX = 0, saveSpeedY = 0;
-      System.out.print('\n');
-      System.out.print(right);
-      System.out.print(left);
-      System.out.print(down);
-      System.out.print(up);
-      if (right == 1) {
-        saveSpeedX = speed;
-      } else if (left == 1) {
-        saveSpeedX = -speed;
-      }
-      if (down == 1) {
-        saveSpeedY = speed;
-      } else if (up == 1) {
-        saveSpeedY = -speed;
-      }
-      /*
-       * if (this.getTranslateX() + Constants.sizeOfEnemy >= maxX || this.getTranslateX() <= minX)
-       * saveSpeedX = -saveSpeedX; if (this.getTranslateY() + Constants.sizeOfEnemy >= maxY ||
-       * this.getTranslateY() <= minY) saveSpeedY = -saveSpeedY;
-       */
+      int x = x1 + x2 * 10 + x3 * 100;
+      int y = y1 + y2 * 10 + y3 * 100;
       animation.play();
-      moveX(saveSpeedX);
-      moveY(saveSpeedY);
+      this.setTranslateX(x);
+      this.setTranslateY(y);
       ready = true;
     }
   }
-
 
   /**
    * Method set speed of enemy
    * 
    * @param x,y speed by x and speed by y
+   * 
    * @see Enemy#setSpeed(int, int)
    */
   public void setSpeed(int x, int y) {

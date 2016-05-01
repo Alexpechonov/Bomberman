@@ -77,10 +77,12 @@ public class MySpriteAnimation extends Transition {
       imageView.setViewport(new Rectangle2D(x, y, width, height));
       lastIndex = index;
     }
-    if (type == 1 && k == 1 && Main.start == true)
+    if (type == 1 && k == 1 && Main.start == true) {
       Main.bomb[numberOfBomb - 1].detonation();
-    if (type == 2 && k == 1 && Main.start == true)
+    }
+    if (type == 2 && k == 1 && Main.start == true) {
       Main.bomb[numberOfBomb - 1].endOfDetonation();
+    }
   }
 
   /**

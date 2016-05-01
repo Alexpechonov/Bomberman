@@ -34,8 +34,9 @@ public class SaveGame {
   }
 
   public void openBufferForWrite() {
-    if (out != null)
+    if (out != null) {
       return;
+    }
     countOfSaves++;
     cleanSave(countOfSaves);
     String path = new String("SaveGames\\moveplayer_number_" + countOfSaves + ".c");
@@ -48,8 +49,9 @@ public class SaveGame {
   }
 
   public void openBufferForRead() {
-    if (in != null)
+    if (in != null) {
       return;
+    }
     try {
       in = new BufferedReader(new InputStreamReader(new FileInputStream(tr.showOpenDialog(null))));
     } catch (IOException e) {
@@ -71,8 +73,9 @@ public class SaveGame {
 
   public void newLine() {
     try {
-      if (out != null)
+      if (out != null) {
         out.newLine();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -80,10 +83,11 @@ public class SaveGame {
 
   public int getIntFromFile() {
     try {
-      if (in == null)
+      if (in == null) {
         return -2;
+      }
       int temp = in.read();
-      if (temp == 6) {
+      if (temp == -1) {
         closeInputStream();
         Main.endOfSave();
       }
@@ -91,12 +95,13 @@ public class SaveGame {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return 0;
+    return -1;
   }
 
   public void closeOutputStream() {
     try {
       if (out != null) {
+        saveMove(-1);
         out.close();
         out = null;
       }
