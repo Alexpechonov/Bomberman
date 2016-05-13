@@ -1,5 +1,7 @@
 package com.alex.bsuir;
 
+import java.util.ArrayList;
+
 /**
  * Class contains constants for progect
  */
@@ -16,6 +18,8 @@ public class Constants {
 
   public static int BlocksInHorizontal = 21;
   public static int BlocksInVertical = 11;
+  
+  public static int CountOfLevels = 3;
 
   public static int offsetLeft = 120 - 40;
   public static int offsetUp = 170 - 40;
@@ -23,9 +27,10 @@ public class Constants {
   public static int menuWidth = 300;
   public static int menuHeight = 600;
   public static int itemHeight = 24;
-  
+
   public static SaveGame save = new SaveGame();
 
   public static int speedOfBomberman = 2;
-
+  
+  public static GameInfo[] games;
 }

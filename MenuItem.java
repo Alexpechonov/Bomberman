@@ -25,6 +25,8 @@ public class MenuItem extends StackPane {
   public static final int SHOW_SAVES = 6;
   public static final int PLAY_SAVES = 7;
   public static final int BACK = 8;
+  public static final int SCALA_SORT = 9;
+  public static final int JAVA_SORT = 10;
 
   public MenuItem(String name, int type) {
 
@@ -92,6 +94,15 @@ public class MenuItem extends StackPane {
       }
       if (type == SHOW_SAVES) {
         Constants.save.showSaves();
+        GameInfo.analizeInfo();
+      }
+      if (type == SCALA_SORT) {
+        Constants.save.convertSavesInToInfo();
+        Constants.save.sortInfoList();
+      }
+      if (type == JAVA_SORT) {
+        Constants.save.convertSavesInToInfo();
+        Constants.save.javaSortInfoList();
       }
     });
 

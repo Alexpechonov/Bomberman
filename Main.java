@@ -26,6 +26,9 @@ import javafx.stage.WindowEvent;
  */
 public class Main extends Application {
 
+  public static int countOfMoves;
+  public static int countOfBombs;
+
   private static Thread newThread = null;
   private static Thread playThread = null;
   private static Thread replayThread = null;
@@ -132,6 +135,8 @@ public class Main extends Application {
   }
 
   public static void startGame() {
+    countOfBombs = 0;
+    countOfMoves = 0;
     playThread = new Thread(new startGame());
     playThread.start();
   }
@@ -141,6 +146,8 @@ public class Main extends Application {
   }
 
   public static void startReplay() {
+    countOfBombs = 0;
+    countOfMoves = 0;
     replayThread = new Thread(new startReplay());
     replayThread.start();
   }
@@ -179,6 +186,14 @@ public class Main extends Application {
     pauseReplay();
   }
 
+  private static void printStatistics() {
+    System.out.println();
+    System.out.print("Count of player moves - ");
+    System.out.println(countOfMoves);
+    System.out.print("Count of setted bombs - ");
+    System.out.println(countOfBombs);
+  }
+
   public static void endOfSave() {
     createMenuSettings();
     Platform.runLater(new Runnable() {
@@ -201,12 +216,14 @@ public class Main extends Application {
           public void handle(ActionEvent event) {
             main_scene.setRoot(mainRoot);
             endOfSave.close();
+            printStatistics();
           }
         });
         endOfSave.setOnCloseRequest(new EventHandler<WindowEvent>() {
           public void handle(WindowEvent event) {
             main_scene.setRoot(mainRoot);
             endOfSave.close();
+            printStatistics();
           }
         });
         saveRoot.getChildren().addAll(but);
@@ -250,12 +267,14 @@ public class Main extends Application {
           public void handle(ActionEvent event) {
             main_scene.setRoot(mainRoot);
             endOfGame.close();
+            printStatistics();
           }
         });
         endOfGame.setOnCloseRequest(new EventHandler<WindowEvent>() {
           public void handle(WindowEvent event) {
             main_scene.setRoot(mainRoot);
             endOfGame.close();
+            printStatistics();
           }
         });
         endRoot.getChildren().addAll(img, but);
@@ -319,6 +338,7 @@ public class Main extends Application {
         countOfEnemies = 0;
         activeAI = false;
         clearContent();
+        printStatistics();
       }
     });
     but.setFocusTraversable(false);
@@ -419,6 +439,7 @@ public class Main extends Application {
             player.animationRaL.play();
             player.moveX(Constants.speedOfBomberman);
             Constants.save.saveMove(1);
+            countOfMoves++;
           } else if (isPressed(KeyCode.RIGHT)) {
             player.setScaleX(1);
             player.animationRaL.EndOfAnimation();
@@ -431,6 +452,7 @@ public class Main extends Application {
             player.animationRaL.play();
             player.moveX(-Constants.speedOfBomberman);
             Constants.save.saveMove(1);
+            countOfMoves++;
           } else if (isPressed(KeyCode.LEFT)) {
             player.setScaleX(-1);
             player.animationRaL.EndOfAnimation();
@@ -442,6 +464,7 @@ public class Main extends Application {
             player.animationUp.play();
             player.moveY(-Constants.speedOfBomberman);
             Constants.save.saveMove(1);
+            countOfMoves++;
           } else if (isPressed(KeyCode.UP)) {
             player.animationUp.EndOfAnimation();
             Constants.save.saveMove(0);
@@ -455,6 +478,7 @@ public class Main extends Application {
             player.animationDown.play();
             player.moveY(Constants.speedOfBomberman);
             Constants.save.saveMove(1);
+            countOfMoves++;
           } else if (isPressed(KeyCode.DOWN)) {
             player.animationDown.EndOfAnimation();
             Constants.save.saveMove(0);
@@ -509,6 +533,7 @@ public class Main extends Application {
               moved = true;
               player.setScaleX(1);
               player.animationRaL.play();
+              countOfMoves++;
             }
             if (Constants.save.getIntFromFile() == 1) {
               player.moveX(-Constants.speedOfBomberman);
@@ -516,12 +541,14 @@ public class Main extends Application {
               moved = true;
               player.setScaleX(-1);
               player.animationRaL.play();
+              countOfMoves++;
             }
             if (Constants.save.getIntFromFile() == 1) {
               player.moveY(-Constants.speedOfBomberman);
               direction = 3;
               moved = true;
               player.animationUp.play();
+              countOfMoves++;
             }
             if (Constants.save.getIntFromFile() == 1) {
               player.moveY(Constants.speedOfBomberman);
@@ -529,6 +556,7 @@ public class Main extends Application {
               moved = true;
               player.setScaleX(1);
               player.animationDown.play();
+              countOfMoves++;
             }
             if (moved == false) {
               switch (direction) {
@@ -571,7 +599,8 @@ public class Main extends Application {
                 || (y3 = Constants.save.getIntFromFile()) == -2) {
               return;
             } else {
-              bomb[numberOfBomb].setBomb(numberOfBomb, x1, x2, x3, y1, y2, y3);
+              bomb[numberOfBomb].setBomb(x1, x2, x3, y1, y2, y3);
+              countOfBombs++;
             }
             break;
         }
@@ -608,6 +637,7 @@ public class Main extends Application {
     menu = new MenuBox(new MenuItem("RESUME GAME", MenuItem.RESUME_GAME),
         new MenuItem("NEW GAME", MenuItem.NEW_GAME),
         new MenuItem("SHOW SAVES", MenuItem.SHOW_SAVES),
+        new MenuItem("SCALA SORT", MenuItem.SCALA_SORT), new MenuItem("JAVA SORT", MenuItem.JAVA_SORT),
         new MenuItem("PLAY SAVES", MenuItem.PLAY_SAVES), new MenuItem("QUIT", MenuItem.QUIT));
     menu.isActive = true;
 
@@ -672,10 +702,9 @@ public class Main extends Application {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      int delay = countOfEnemies * 3;
       while (replayThread != null) {
         try {
-          Thread.sleep(15 - delay);
+          Thread.sleep(15 - countOfEnemies * 3);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -686,6 +715,11 @@ public class Main extends Application {
 
   private static class startGame implements Runnable {
     public void run() {
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       while (playThread != null) {
         try {
           Thread.sleep(20);
@@ -715,7 +749,4 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
-
 }
-
-
