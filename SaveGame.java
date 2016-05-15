@@ -247,7 +247,8 @@ public class SaveGame {
       } while (tmp != -1);
       closeInputStream();
       Constants.games[count] =
-          new GameInfo(temp.getName(), stepsCountR, stepsCountL, stepsCountU, stepsCountD, enemyStepsCount, settedBombs, numberOfLevel + 1);
+          new GameInfo(temp.getName(), stepsCountR, stepsCountL, stepsCountU,
+	 stepsCountD, enemyStepsCount, settedBombs, numberOfLevel + 1);
       count++;
     }
   }

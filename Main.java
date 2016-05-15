@@ -637,7 +637,8 @@ public class Main extends Application {
     menu = new MenuBox(new MenuItem("RESUME GAME", MenuItem.RESUME_GAME),
         new MenuItem("NEW GAME", MenuItem.NEW_GAME),
         new MenuItem("SHOW SAVES", MenuItem.SHOW_SAVES),
-        new MenuItem("SCALA SORT", MenuItem.SCALA_SORT), new MenuItem("JAVA SORT", MenuItem.JAVA_SORT),
+        new MenuItem("SCALA SORT", MenuItem.SCALA_SORT), 
+	new MenuItem("JAVA SORT", MenuItem.JAVA_SORT),
         new MenuItem("PLAY SAVES", MenuItem.PLAY_SAVES), new MenuItem("QUIT", MenuItem.QUIT));
     menu.isActive = true;
 
