@@ -289,6 +289,20 @@ public class Main extends Application {
 
   }
 
+  public static void endGame() {
+    main_scene.setRoot(mainRoot);
+    createMenuSettings();
+    Constants.save.closeOutputStream();
+    Constants.save.closeInputStream();
+    start = false;
+    activeReplay = false;
+    platforms.clear();
+    countOfEnemies = 0;
+    activeAI = false;
+    clearContent();
+    printStatistics();
+  }
+
   /**
    * Method create gamefield
    * 
@@ -426,7 +440,7 @@ public class Main extends Application {
    * 
    * @see Main#update()
    */
-  private static void update() {
+  static void update() {
     if (gameRoot != null && player != null) {
       if (player.isAlive() == true) {
         if (activeAI == false) {
@@ -637,8 +651,9 @@ public class Main extends Application {
     menu = new MenuBox(new MenuItem("RESUME GAME", MenuItem.RESUME_GAME),
         new MenuItem("NEW GAME", MenuItem.NEW_GAME),
         new MenuItem("SHOW SAVES", MenuItem.SHOW_SAVES),
-        new MenuItem("SCALA SORT", MenuItem.SCALA_SORT), 
-	new MenuItem("JAVA SORT", MenuItem.JAVA_SORT),
+        new MenuItem("SCALA SORT", MenuItem.SCALA_SORT),
+        new MenuItem("JAVA SORT", MenuItem.JAVA_SORT),
+        new MenuItem("GENERATOR", MenuItem.GENERATOR),
         new MenuItem("PLAY SAVES", MenuItem.PLAY_SAVES), new MenuItem("QUIT", MenuItem.QUIT));
     menu.isActive = true;
 

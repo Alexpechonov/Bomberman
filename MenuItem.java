@@ -27,6 +27,7 @@ public class MenuItem extends StackPane {
   public static final int BACK = 8;
   public static final int SCALA_SORT = 9;
   public static final int JAVA_SORT = 10;
+  public static final int GENERATOR = 11;
 
   public MenuItem(String name, int type) {
 
@@ -103,6 +104,10 @@ public class MenuItem extends StackPane {
       if (type == JAVA_SORT) {
         Constants.save.convertSavesInToInfo();
         Constants.save.javaSortInfoList();
+      }
+      if (type == GENERATOR) {
+        NotationGenerator generator = new NotationGenerator();
+        generator.generateSaves();
       }
     });
 

@@ -57,7 +57,7 @@ public class GameInfo {
     System.out.print("Max usable levels: ");
     for (int i = 0; i < Constants.CountOfLevels; i++) {
       if (max == levels[i]) {
-        System.out.println(i);
+        System.out.println(i + 1);
       }
     }
   }

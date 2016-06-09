@@ -159,10 +159,72 @@ public class SaveGame {
     }
     ListView<String> listSaves = new ListView<String>();
     listSaves.setItems(games);
+    listSaves.setOnMousePressed(e -> {
+      transform(listSaves.getSelectionModel().getSelectedIndex());
+    });
     listSaves.setStyle(
         "-fx-border-width:3pt;-fx-border-color:red;-fx-font:bold 10pt ItalicT;-fx-text-fill: red;");
     listSaves.setPrefSize(900, 500);
     listSaves.setMaxSize(900, 500);
+    saveRoot.getChildren().add(listSaves);
+    Scene saveScene = new Scene(saveRoot);
+    saves.setScene(saveScene);
+    saves.show();
+  }
+
+  private void transform(int temp) {
+    ObservableList<String> games = FXCollections.observableArrayList();
+    if (Constants.games == null) {
+      Constants.save.convertSavesInToInfo();
+    }
+    ListView<String> listSaves = new ListView<String>();
+    int tmp = 0;
+    int[] mass = new int[5];
+    NotationTransformer transformer = new NotationTransformer();
+    try {
+      in = new BufferedReader(new InputStreamReader(
+          new FileInputStream("SaveGames\\" + Constants.games[temp].getName())));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    while (tmp != -1) {
+      tmp = readInt();
+      switch (tmp) {
+        case -1:
+          games.add((String) transformer.parse(-1));
+          break;
+        case 3:
+          mass[0] = 3;
+          for (int i = 1; i < 5; i++) {
+            mass[i] = readInt();
+          }
+          games.add((String) transformer.parse(mass));
+          break;
+        case 4:
+          mass[0] = 4;
+          mass[1] = readInt();
+          mass[2] = readInt() + readInt() * 10 + readInt() * 100;
+          mass[3] = readInt() + readInt() * 10 + readInt() * 100;
+          games.add((String) transformer.parse(mass));
+          break;
+        case 5:
+          mass[0] = 4;
+          mass[1] = readInt();
+          mass[2] = readInt() + readInt() * 10 + readInt() * 100;
+          mass[3] = readInt() + readInt() * 10 + readInt() * 100;
+          games.add((String) transformer.parse(mass));
+          break;
+      }
+    }
+    listSaves.setItems(games);
+    Stage saves;
+    saves = new Stage();
+    saves.setTitle("Save " + Constants.games[temp].getName());
+    Pane saveRoot = new Pane();
+    saveRoot.setPrefSize(400, 500);
+    saveRoot.setMaxSize(400, 500);
+    listSaves.setPrefSize(400, 500);
+    listSaves.setMaxSize(400, 500);
     saveRoot.getChildren().add(listSaves);
     Scene saveScene = new Scene(saveRoot);
     saves.setScene(saveScene);
@@ -205,39 +267,33 @@ public class SaveGame {
         tmp = readInt();
         switch (tmp) {
           case 3:
-            if (Constants.save.getIntFromFile() == 1) {
+            if (readInt() == 1) {
               stepsCountR++;
             }
-            if (Constants.save.getIntFromFile() == 1) {
+            if (readInt() == 1) {
               stepsCountL++;
             }
-            if (Constants.save.getIntFromFile() == 1) {
+            if (readInt() == 1) {
               stepsCountU++;
             }
-            if (Constants.save.getIntFromFile() == 1) {
+            if (readInt() == 1) {
               stepsCountD++;
             }
 
             break;
           case 4:
-            Constants.save.getIntFromFile();
-            if ((Constants.save.getIntFromFile()) == -2 || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2) {
+            readInt();
+            if ((readInt()) == -2 || (readInt()) == -2 || (readInt()) == -2 || (readInt()) == -2
+                || (readInt()) == -2 || (readInt()) == -2) {
               return;
             } else {
               enemyStepsCount++;
             }
             break;
           case 5:
-            Constants.save.getIntFromFile();
-            if ((Constants.save.getIntFromFile()) == -2 || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2
-                || (Constants.save.getIntFromFile()) == -2) {
+            readInt();
+            if ((readInt()) == -2 || (readInt()) == -2 || (readInt()) == -2 || (readInt()) == -2
+                || (readInt()) == -2 || (readInt()) == -2) {
               return;
             } else {
               settedBombs++;
@@ -246,9 +302,8 @@ public class SaveGame {
         }
       } while (tmp != -1);
       closeInputStream();
-      Constants.games[count] =
-          new GameInfo(temp.getName(), stepsCountR, stepsCountL, stepsCountU,
-	 stepsCountD, enemyStepsCount, settedBombs, numberOfLevel + 1);
+      Constants.games[count] = new GameInfo(temp.getName(), stepsCountR, stepsCountL, stepsCountU,
+          stepsCountD, enemyStepsCount, settedBombs, numberOfLevel + 1);
       count++;
     }
   }
@@ -261,6 +316,7 @@ public class SaveGame {
   }
 
   public void sortInfoList() {
+    convertSavesInToInfo();
     ScalaSort scalaSort = new ScalaSort();
     long time = System.currentTimeMillis();
     scalaSort.sort(Constants.games);
@@ -269,6 +325,7 @@ public class SaveGame {
   }
 
   public void javaSortInfoList() {
+    convertSavesInToInfo();
     JavaSort javaSort = new JavaSort();
     long time = System.currentTimeMillis();
     javaSort.qSort(Constants.games, 0, Constants.games.length - 1);

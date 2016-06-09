@@ -30,4 +30,5 @@ class ScalaSort {
     }
     quickSort(0, gameArray.length - 1)
   }
+  
 }

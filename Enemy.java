@@ -252,6 +252,14 @@ public class Enemy extends Pane {
       animation.play();
       this.setTranslateX(x);
       this.setTranslateY(y);
+      for (GameItem platform : Main.platforms) {
+        if (this.getBoundsInParent().intersects(platform.getBoundsInParent())) {
+          if (platform.type == GameItem.ItemType.INFIRE) {
+            setDeath();
+            return;
+          }
+        }
+      }
       ready = true;
     }
   }

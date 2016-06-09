@@ -147,7 +147,8 @@ public class Character extends Pane {
         return;
       }
 
-      Main.createEnd();
+      //Main.createEnd();
+      Constants.save.closeOutputStream();
     }
   }
 
@@ -407,12 +408,14 @@ public class Character extends Pane {
         this.animationRaL.play();
         Constants.save.saveMove(1);
         Constants.save.saveMove(0);
+        Main.countOfMoves++;
       }
       if (speedX < 0) {
         this.setScaleX(-1);
         this.animationRaL.play();
         Constants.save.saveMove(0);
         Constants.save.saveMove(1);
+        Main.countOfMoves++;
       }
       if (speedX == 0) {
         Constants.save.saveMove(0);
@@ -422,11 +425,13 @@ public class Character extends Pane {
         this.animationDown.play();
         Constants.save.saveMove(0);
         Constants.save.saveMove(1);
+        Main.countOfMoves++;
       }
       if (speedY < 0) {
         this.animationUp.play();
         Constants.save.saveMove(1);
         Constants.save.saveMove(0);
+        Main.countOfMoves++;
       }
       if (speedY == 0) {
         Constants.save.saveMove(0);

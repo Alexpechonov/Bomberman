@@ -111,20 +111,19 @@ public class Bomb extends Pane {
     return numberOfBomb;
   }
 
-  public void setBomb(int numBomb, int x1, int x2, int x3, int y1, int y2, int y3) {
+  public void setBomb(int x1, int x2, int x3, int y1, int y2, int y3) {
 
-    ready = false;
     int posX = x1 + x2 * 10 + x3 * 100;
     int posY = y1 + y2 * 10 + y3 * 100;
 
-    pos[numberOfBomb * 2 - 2] = (int) posX;
-    pos[numberOfBomb * 2 - 1] = (int) posY;
+    pos[numberOfBomb * 2 - 2] = posX;
+    pos[numberOfBomb * 2 - 1] = posY;
 
     Main.platforms.get((int) ((((posY - Constants.offsetUp) / Constants.sizeOfBlocks)
         * Constants.BlocksInHorizontal))).type = GameItem.ItemType.BOMB;
-    Main.bomb[numBomb].setTranslateX(posX);
-    Main.bomb[numBomb].setTranslateY(posY);
-    Main.bomb[numBomb].setVisible(true);
+    this.setTranslateX(posX);
+    this.setTranslateY(posY);
+    this.setVisible(true);
     firstAnimation.play();
 
   }
@@ -153,8 +152,10 @@ public class Bomb extends Pane {
       return;
     }
 
-    pos[numberOfBomb * 2 - 2] = (int) posX;
-    pos[numberOfBomb * 2 - 1] = (int) posY;
+    pos[numberOfBomb * 2 - 2] = posX;
+    pos[numberOfBomb * 2 - 1] = posY;
+
+    Main.countOfBombs++;
 
     plat.type = GameItem.ItemType.BOMB;
     Main.bomb[numberOfBomb - 1].setTranslateX(posX);
